@@ -1,0 +1,215 @@
+import Link from "next/link";
+import { ButtonLink, Card, Section, SectionHead } from "@/components/ui";
+import { Faq } from "@/components/faq";
+import { Address } from "@/components/address";
+import { FaqSchema } from "@/components/schema";
+import { accreditations, business, stats } from "@/lib/content/business";
+import { generalFaqs } from "@/lib/content/faqs";
+import { pillars, servicesInPillar } from "@/lib/content/services";
+import { ui } from "@/lib/content/ui";
+import { href, isLocale, t } from "@/lib/i18n";
+import { notFound } from "next/navigation";
+
+export default async function HomePage({ params }: PageProps<"/[lang]">) {
+  const { lang } = await params;
+  if (!isLocale(lang)) notFound();
+  const locale = lang;
+
+  return (
+    <>
+      <section className="relative overflow-hidden border-b border-line">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -top-40 start-1/4 size-[36rem] rounded-full bg-gold/8 blur-[120px]"
+        />
+        <div className="relative mx-auto grid max-w-6xl gap-12 px-5 py-20 sm:px-8 sm:py-28 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+          <div>
+            <p className="eyebrow flex items-center gap-3">
+              <span aria-hidden className="h-px w-6 bg-gold" />
+              {locale === "ar"
+                ? "استوديو معتمد في دبي"
+                : "XPEL & GTECHNIQ certified · Dubai"}
+            </p>
+
+            <h1 className="mt-6 text-4xl leading-[1.05] sm:text-6xl">
+              <span className="block text-metal">
+                {locale === "ar" ? "احمِ." : "Protect."}
+              </span>
+              <span className="block text-metal">
+                {locale === "ar" ? "جدّد." : "Enhance."}
+              </span>
+              <span className="block text-gold">
+                {locale === "ar" ? "طوّر." : "Elevate."}
+              </span>
+            </h1>
+
+            <p className="mt-6 max-w-lg text-lg leading-relaxed text-muted">
+              {locale === "ar"
+                ? "فيلم حماية الطلاء، والطلاء السيراميكي، والتظليل، والعناية الكاملة — في رأس الخور بدبي. نعامل كل سيارة كما نعامل سياراتنا."
+                : "Paint protection film, ceramic coating, tinting and full detailing in Ras Al Khor, Dubai. We treat every car the way we'd treat our own."}
+            </p>
+
+            <div className="mt-9 flex flex-wrap gap-3">
+              <ButtonLink href={href(locale, "/contact")}>
+                {t(ui.cta.quote, locale)}
+              </ButtonLink>
+              <ButtonLink href={href(locale, "/gallery")} variant="outline">
+                {t(ui.cta.viewWork, locale)}
+              </ButtonLink>
+            </div>
+
+            <ul className="mt-12 flex flex-wrap gap-x-10 gap-y-4">
+              {accreditations.map((item) => (
+                <li key={item.name}>
+                  <p className="font-display text-lg font-extrabold tracking-wider text-metal">
+                    {item.name}
+                  </p>
+                  <p className="text-xs uppercase tracking-wider text-muted">
+                    {t(item.label, locale)}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="relative">
+            <div className="flex aspect-4/5 items-center justify-center rounded-md border border-dashed border-line bg-ink-card p-8 text-center">
+              <p className="max-w-xs text-sm leading-relaxed text-muted">
+                {locale === "ar"
+                  ? "مكان صورة العمل الرئيسية — بانتظار صور الاستوديو."
+                  : "Hero shot slot — waiting on the studio's own photography."}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-line bg-ink-raised">
+        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-px px-5 sm:px-8 lg:grid-cols-4">
+          {stats.map((stat) => (
+            <div key={stat.value} className="px-2 py-8 text-center">
+              <p className="font-display text-3xl font-extrabold text-gold sm:text-4xl">
+                {stat.value}
+              </p>
+              <p className="mt-1 text-xs uppercase tracking-wider text-muted">
+                {t(stat.label, locale)}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <Section>
+        <SectionHead
+          eyebrow={t(ui.sections.pillarsEyebrow, locale)}
+          title={t(ui.sections.pillarsTitle, locale)}
+        />
+
+        <div className="mt-12 grid gap-6 lg:grid-cols-3">
+          {pillars.map((pillar) => {
+            const items = servicesInPillar(pillar.id);
+            return (
+              <Card key={pillar.id} className="flex flex-col">
+                <h3 className="font-display text-2xl font-extrabold uppercase tracking-wider text-gold">
+                  {t(pillar.name, locale)}
+                </h3>
+                <p className="mt-2 text-sm text-cream">{t(pillar.lede, locale)}</p>
+                <ul className="mt-6 flex-1 space-y-2">
+                  {items.slice(0, 5).map((service) => (
+                    <li key={service.slug} className="text-sm text-muted">
+                      {t(service.name, locale)}
+                    </li>
+                  ))}
+                  {items.length > 5 ? (
+                    <li className="text-sm text-muted">
+                      +{items.length - 5}{" "}
+                      {t(ui.labels.servicesCount, locale)}
+                    </li>
+                  ) : null}
+                </ul>
+                <Link
+                  href={href(locale, `/${pillar.id}`)}
+                  className="mt-6 font-display text-xs font-bold uppercase tracking-wider text-gold transition-colors hover:text-gold-bright"
+                >
+                  {t(ui.cta.learnMore, locale)} →
+                </Link>
+              </Card>
+            );
+          })}
+        </div>
+      </Section>
+
+      <Section className="border-t border-line">
+        <SectionHead
+          eyebrow={t(ui.sections.faqEyebrow, locale)}
+          title={t(ui.sections.faqTitle, locale)}
+        />
+        <div className="mt-10 max-w-3xl">
+          <Faq
+            items={generalFaqs.map((faq) => ({
+              question: t(faq.question, locale),
+              answer: t(faq.answer, locale),
+            }))}
+          />
+        </div>
+      </Section>
+
+      <Section className="border-t border-line bg-ink-raised">
+        <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
+          <div>
+            <SectionHead
+              eyebrow={t(ui.sections.contactEyebrow, locale)}
+              title={t(ui.sections.contactTitle, locale)}
+              lede={
+                locale === "ar"
+                  ? "أرسل لنا نوع سيارتك وما تحتاجه، وسنعطيك سعرًا واضحًا ومدة الإنجاز."
+                  : "Send us your car and what you're after. You'll get a clear price and a realistic turnaround, not a callback to book a callback."
+              }
+            />
+            <div className="mt-8 flex flex-wrap gap-3">
+              <ButtonLink href={href(locale, "/contact")}>
+                {t(ui.cta.quote, locale)}
+              </ButtonLink>
+              <a
+                href={business.whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-sm border border-line px-6 py-3.5 font-display text-sm font-bold uppercase tracking-wider text-cream transition-colors hover:border-gold hover:text-gold"
+              >
+                {t(ui.cta.whatsapp, locale)}
+              </a>
+            </div>
+          </div>
+
+          <Card>
+            <h3 className="font-display text-sm font-bold uppercase tracking-widest text-gold">
+              {t(ui.labels.findUs, locale)}
+            </h3>
+            <Address
+              locale={locale}
+              className="mt-4 text-sm leading-relaxed text-muted"
+            />
+            <a
+              href={`tel:${business.phoneRaw}`}
+              className="mt-5 inline-block font-display text-xl font-extrabold text-cream transition-colors hover:text-gold"
+            >
+              {business.phone}
+            </a>
+            <p className="mt-4 text-xs uppercase tracking-wider text-muted">
+              {locale === "ar"
+                ? "السبت – الخميس ٩:٠٠ – ١٩:٠٠ · الجمعة مغلق"
+                : "Sat–Thu 9:00–19:00 · Friday closed"}
+            </p>
+          </Card>
+        </div>
+      </Section>
+
+      <FaqSchema
+        items={generalFaqs.map((faq) => ({
+          question: faq.question.en,
+          answer: faq.answer.en,
+        }))}
+      />
+    </>
+  );
+}
