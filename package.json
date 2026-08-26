@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+    "build": "next build && node scripts/flatten-export.mjs",
+    "preview": "npx --yes serve out -l 4830",
+    "images": "python3 scripts/build-image-variants.py"
   },
   "dependencies": {
     "next": "16.3.2",

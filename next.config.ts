@@ -1,29 +1,26 @@
 import type { NextConfig } from "next";
 
 /**
- * The old site had a page per service under /service/<slug>. Four of those
- * slugs survive as deep pages; the rest now live as sections on a pillar
- * page. These 301s hand their accumulated ranking to the new location
- * instead of letting it die in a 404.
+ * Built as a static export for GitHub Pages, which serves files and nothing
+ * else. That rules out three things this project used to rely on:
+ *
+ *   - `proxy.ts`, which rewrote `/protect` to `/en/protect`. Gone; instead
+ *     scripts/flatten-export.mjs lifts `out/en/*` to the root after the build,
+ *     so English still lives at `/` and Arabic at `/ar/`.
+ *   - `/api/lead`. The enquiry form now posts straight to the GoHighLevel
+ *     webhook from the browser.
+ *   - `redirects()`, which can't run without a server. The five retired
+ *     `/service/*` slugs are emitted as meta-refresh stubs by the same script.
  */
-const legacyServiceRedirects: Record<string, string> = {
-  "car-detailing": "/enhance#interior-detailing",
-  "car-washing": "/enhance#vehicle-washing",
-  "home-detailing": "/enhance#mobile-detailing",
-  "alloy-rim-protection": "/protect#alloy-rim-protection",
-  "vehicle-accessories": "/elevate#custom-exterior-accessories",
-};
-
 const nextConfig: NextConfig = {
-  async redirects() {
-    return Object.entries(legacyServiceRedirects).flatMap(([slug, target]) => [
-      { source: `/service/${slug}`, destination: target, permanent: true },
-      {
-        source: `/ar/service/${slug}`,
-        destination: `/ar${target}`,
-        permanent: true,
-      },
-    ]);
+  output: "export",
+
+  // Directory-style URLs (`/protect/index.html`), which is what Pages expects.
+  trailingSlash: true,
+
+  images: {
+    loader: "custom",
+    loaderFile: "./image-loader.ts",
   },
 };
 

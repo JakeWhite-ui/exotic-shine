@@ -2,6 +2,9 @@ import type { MetadataRoute } from "next";
 import { business } from "@/lib/content/business";
 import { deepServices, pillars } from "@/lib/content/services";
 
+// Required by `output: 'export'` — there's no server to regenerate this.
+export const dynamic = "force-static";
+
 const staticPaths = [
   "/",
   "/services",

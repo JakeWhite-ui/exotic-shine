@@ -23,21 +23,48 @@ export function LeadForm({
 }) {
   const [status, setStatus] = useState<Status>("idle");
 
+  /**
+   * The site is a static export on GitHub Pages, so there's no server to post
+   * through — the enquiry goes straight from the browser to the GoHighLevel
+   * webhook. That does put the webhook URL in the page source; it's an
+   * inbound-only endpoint, so the worst case is someone pushing junk leads,
+   * which the honeypot below and GHL's own filtering handle. If that ever
+   * becomes a real problem the answer is a small proxy on a host that runs
+   * server code, not obfuscating the URL here.
+   */
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
-    const data = Object.fromEntries(new FormData(form));
+    const data = Object.fromEntries(new FormData(form)) as Record<string, string>;
+
+    if (data.website) {
+      form.reset();
+      setStatus("sent");
+      return;
+    }
+
+    const webhook = process.env.NEXT_PUBLIC_GHL_WEBHOOK_URL;
+    if (!webhook) {
+      setStatus("error");
+      return;
+    }
 
     setStatus("sending");
 
     try {
-      const response = await fetch("/api/lead", {
+      const response = await fetch(webhook, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          ...data,
+          first_name: data.name,
+          phone: data.phone,
+          email: data.email,
+          vehicle: data.vehicle,
+          service: data.service,
+          message: data.message,
+          source: "exoticshine.ae",
           locale,
-          pageUrl: window.location.href,
+          page: window.location.href,
         }),
       });
 
