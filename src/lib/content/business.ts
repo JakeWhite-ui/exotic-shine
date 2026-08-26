@@ -70,14 +70,15 @@ export const business = {
    * openingHoursSpecification expects. Displayed as 12-hour per the client —
    * see `formatHours` below.
    *
-   * Friday is the studio's day off.
+   * Open seven days. The old site listed Friday as closed; the client
+   * confirmed on 26 Aug that they trade the same hours as every other day.
    */
   hours: [
     { day: "Monday", open: "09:00", close: "19:00" },
     { day: "Tuesday", open: "09:00", close: "19:00" },
     { day: "Wednesday", open: "09:00", close: "19:00" },
     { day: "Thursday", open: "09:00", close: "19:00" },
-    { day: "Friday", open: null, close: null },
+    { day: "Friday", open: "09:00", close: "19:00" },
     { day: "Saturday", open: "09:00", close: "19:00" },
     { day: "Sunday", open: "09:00", close: "19:00" },
   ],
@@ -154,12 +155,17 @@ export function hoursSummary(locale: "en" | "ar") {
   const closed = ordered.filter((entry) => !entry.open);
   if (!open.length) return null;
 
+  const times = formatHours(open[0], locale);
+
+  // Seven days open would otherwise render as "Sat–Fri", which reads as a
+  // typo rather than as "all week".
+  if (!closed.length) {
+    return locale === "ar" ? `يوميًا ${times}` : `Open daily ${times}`;
+  }
+
   const first = shortDay[open[0].day][locale];
   const last = shortDay[open[open.length - 1].day][locale];
   const range = open.length === 1 ? first : `${first}–${last}`;
-  const times = formatHours(open[0], locale);
-
-  if (!closed.length) return `${range} ${times}`;
 
   const closedNames = closed
     .map((entry) => shortDay[entry.day][locale])
