@@ -53,7 +53,7 @@ export async function POST(request: Request) {
         first_name: body.name,
         phone: body.phone,
         email: body.email,
-        source: "exoticshine.net",
+        source: "exoticshine.ae",
         page: body.pageUrl,
         locale: body.locale,
         vehicle: body.vehicle,

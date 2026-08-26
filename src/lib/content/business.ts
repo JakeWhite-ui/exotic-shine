@@ -14,7 +14,14 @@ export const business = {
   phoneRaw: "+971501097330",
   email: "info@exoticshine.net",
   whatsapp: "https://wa.me/971501097330",
-  domain: "https://exoticshine.net",
+  /**
+   * The .ae ccTLD is the stronger signal for a Dubai-only business. The old
+   * .net still needs to 301 here rather than be switched off — it's on the
+   * physical signage, on the Google Business Profile, and holds whatever
+   * index Google has.
+   */
+  domain: "https://exoticshine.ae",
+  legacyDomain: "https://exoticshine.net",
   address: {
     unit: "Warehouse No. 09, Al Maklai Warehouses",
     district: "Ras Al Khor, Industrial Area 3",
