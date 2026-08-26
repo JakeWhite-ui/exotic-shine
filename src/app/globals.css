@@ -138,6 +138,47 @@
   );
 }
 
+/**
+ * Reviews marquee. The track holds the cards twice over, so translating it
+ * exactly -50% lands on an identical frame and the loop is seamless.
+ * Pure CSS — no JS, no layout measuring, and it survives the static export.
+ */
+@keyframes marquee-drift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@utility marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-drift var(--marquee-duration, 70s) linear infinite;
+  animation-direction: var(--marquee-direction, normal);
+}
+
+/* Let people stop it to actually read a card. */
+.marquee-viewport:hover .marquee-track,
+.marquee-viewport:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /*
+   * Freezing the animation would leave a half-scrolled track, so stop it
+   * entirely and hand the row back to the user as a normal scroller.
+   */
+  .marquee-track {
+    animation: none !important;
+  }
+
+  .marquee-viewport {
+    overflow-x: auto;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

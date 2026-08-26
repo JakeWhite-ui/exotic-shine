@@ -245,15 +245,21 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
         </ul>
       </Section>
 
-      <Section className="border-t border-line bg-ink-raised">
-        <SectionHead
-          eyebrow={t(ui.sections.reviewsEyebrow, locale)}
-          title={t(ui.sections.reviewsTitle, locale)}
-        />
+      {/*
+        Not wrapped in <Section>: the marquee wants the full viewport width so
+        cards run off both edges, while the heading stays in the grid.
+      */}
+      <section className="overflow-hidden border-t border-line bg-ink-raised py-16 sm:py-24">
+        <div className="mx-auto w-full max-w-6xl px-5 sm:px-8">
+          <SectionHead
+            eyebrow={t(ui.sections.reviewsEyebrow, locale)}
+            title={t(ui.sections.reviewsTitle, locale)}
+          />
+        </div>
         <div className="mt-10">
           <Reviews locale={locale} />
         </div>
-      </Section>
+      </section>
 
       <Section className="border-t border-line">
         <SectionHead

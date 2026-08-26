@@ -2,17 +2,11 @@ import Link from "next/link";
 import { Logo } from "@/components/logo";
 import { MailIcon, PhoneIcon, WhatsAppIcon } from "@/components/icons";
 import { Address } from "@/components/address";
+import { SocialLinks } from "@/components/social-links";
 import { business } from "@/lib/content/business";
 import { pillars, servicesInPillar } from "@/lib/content/services";
 import { ui } from "@/lib/content/ui";
 import { href, t, type Locale } from "@/lib/i18n";
-
-const socials = [
-  { key: "instagram", label: "Instagram", url: business.social.instagram },
-  { key: "facebook", label: "Facebook", url: business.social.facebook },
-  { key: "tiktok", label: "TikTok", url: business.social.tiktok },
-  { key: "youtube", label: "YouTube", url: business.social.youtube },
-];
 
 export function Footer({ locale }: { locale: Locale }) {
   return (
@@ -26,20 +20,10 @@ export function Footer({ locale }: { locale: Locale }) {
                 ? "استوديو عناية بالسيارات في رأس الخور، دبي. حماية طلاء، وطلاء سيراميكي، وتظليل، وعناية كاملة."
                 : "A car care studio in Ras Al Khor, Dubai. Paint protection, ceramic coating, tinting and full detailing."}
             </p>
-            <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2">
-              {socials.map((social) => (
-                <li key={social.key}>
-                  <a
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs uppercase tracking-wider text-muted transition-colors hover:text-gold"
-                  >
-                    {social.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <p className="mt-6 font-display text-xs font-bold uppercase tracking-widest text-gold">
+              {t(ui.labels.followUs, locale)}
+            </p>
+            <SocialLinks locale={locale} className="mt-3" />
           </div>
 
           {pillars.map((pillar) => (

@@ -58,11 +58,12 @@ export const business = {
     rating: 5.0,
     reviewCount: 16,
   },
+  /** Confirmed by the client 26 Aug — the Facebook and YouTube links both moved. */
   social: {
     instagram: "https://www.instagram.com/exoticshine.uae",
-    facebook: "https://www.facebook.com/share/17daiQbKxL/",
+    facebook: "https://www.facebook.com/share/1BdzU3ovvR/",
     tiktok: "https://www.tiktok.com/@exoticshine.uae",
-    youtube: "https://www.youtube.com/watch?v=YhUqxWR4mnE",
+    youtube: "https://youtube.com/@exoticshineuae",
   },
   /** Friday is the studio's day off. */
   hours: [

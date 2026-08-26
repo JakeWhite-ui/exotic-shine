@@ -4,6 +4,7 @@ import { Card, Section, SectionHead } from "@/components/ui";
 import { LeadForm } from "@/components/lead-form";
 import { MailIcon, PhoneIcon, WhatsAppIcon } from "@/components/icons";
 import { Address } from "@/components/address";
+import { SocialLinks } from "@/components/social-links";
 import { entranceShot } from "@/lib/content/studio";
 import Image from "next/image";
 import { business } from "@/lib/content/business";
@@ -106,6 +107,13 @@ export default async function ContactPage({
                     : "Look for the lit sign and the red apron at door 09."}
                 </p>
               </div>
+            </Card>
+
+            <Card>
+              <h2 className="font-display text-sm font-bold uppercase tracking-widest text-gold">
+                {t(ui.labels.followUs, locale)}
+              </h2>
+              <SocialLinks locale={locale} variant="labelled" className="mt-4" />
             </Card>
 
             <Card>

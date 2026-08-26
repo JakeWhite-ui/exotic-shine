@@ -55,6 +55,40 @@ export function GlobeIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+export function InstagramIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg {...base} {...props}>
+      <rect x="3" y="3" width="18" height="18" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+export function FacebookIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden {...props}>
+      <path d="M14.5 8.5V6.9c0-.7.2-1.1 1.2-1.1H17V3.1A17 17 0 0 0 15 3c-2.2 0-3.6 1.3-3.6 3.7v1.8H9V11h2.4v8h3V11h2.3l.3-2.5h-2.5Z" />
+    </svg>
+  );
+}
+
+export function TikTokIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden {...props}>
+      <path d="M16.6 3c.3 2 1.5 3.4 3.4 3.6v2.4c-1.2.1-2.4-.2-3.5-.9v5.6c0 4.4-4.4 6.9-7.9 4.7-2.3-1.4-2.9-4.6-1.4-6.9 1-1.5 2.7-2.3 4.5-2.1v2.5c-.4-.1-.8-.1-1.2 0-1.1.2-1.9 1.2-1.7 2.3.2 1.3 1.6 2 2.8 1.5.8-.4 1.3-1.2 1.3-2.1V3h3.7Z" />
+    </svg>
+  );
+}
+
+export function YouTubeIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden {...props}>
+      <path d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4a2.5 2.5 0 0 0-1.8 1.8A26 26 0 0 0 2 12c0 1.6.1 3.2.4 4.8a2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8c.3-1.6.4-3.2.4-4.8s-.1-3.2-.4-4.8ZM10.1 15V9l5.2 3-5.2 3Z" />
+    </svg>
+  );
+}
+
 export function WhatsAppIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden {...props}>
