@@ -30,11 +30,10 @@ export const studioHero: StudioShot = {
  * told a first-time visitor nothing about what to look for.
  */
 export const entranceShot: StudioShot = {
-  src: "/studio/exterior-front.webp",
-  portrait: true,
+  src: "/studio/entrance-day.webp",
   alt: {
-    en: "Warehouse 09 seen from the street, with the lit Exotic Shine sign and red apron at the entrance",
-    ar: "المستودع رقم ٩ من الشارع، مع لوحة إكزوتك شاين المضاءة والسجادة الحمراء عند المدخل",
+    en: "Warehouse 09 seen from the street in daylight, with the Exotic Shine sign and red apron at the entrance",
+    ar: "المستودع رقم ٩ من الشارع نهارًا، مع لوحة إكزوتك شاين والسجادة الحمراء عند المدخل",
   },
 };
 
@@ -61,11 +60,24 @@ export const studioGallery: StudioShot[] = [
     },
   },
   {
-    src: "/studio/counter.webp",
-    portrait: true,
+    src: "/studio/film-swatches.webp",
     alt: {
-      en: "The front counter with detailing products on display",
-      ar: "طاولة الاستقبال مع منتجات العناية المعروضة",
+      en: "Wrap film and tint swatches on the counter, showing the colour range",
+      ar: "عينات أفلام التغليف والتظليل على الطاولة، تُظهر تدرج الألوان",
+    },
+  },
+  {
+    src: "/studio/hall-wide.webp",
+    alt: {
+      en: "The full workshop floor with the Exotic Shine wall and the stair to the mezzanine",
+      ar: "أرضية الورشة كاملة مع جدار إكزوتك شاين والدرج المؤدي للميزانين",
+    },
+  },
+  {
+    src: "/studio/brand-wall.webp",
+    alt: {
+      en: "The X Exotic Shine wall with its LED strips and marble floor",
+      ar: "جدار إكزوتك شاين بإضاءته الشريطية وأرضيته الرخامية",
     },
   },
   {
@@ -77,24 +89,14 @@ export const studioGallery: StudioShot[] = [
     },
   },
   {
-    src: "/studio/bay-lit.webp",
-    portrait: true,
+    src: "/studio/counter-front.webp",
     alt: {
-      en: "A prepared bay under the Exotic Shine sign",
-      ar: "منطقة عمل مجهزة تحت لوحة إكزوتك شاين",
+      en: "The retail counter with detailing products under display lighting",
+      ar: "طاولة البيع مع منتجات العناية تحت إضاءة العرض",
     },
   },
   {
-    src: "/studio/bay-curtains.webp",
-    portrait: true,
-    alt: {
-      en: "Dust-controlled bays behind strip curtains",
-      ar: "مناطق عمل معزولة عن الغبار خلف ستائر شرائحية",
-    },
-  },
-  {
-    src: "/studio/exterior-front.webp",
-    portrait: true,
+    src: "/studio/entrance-day.webp",
     alt: {
       en: "The unit from the street in Ras Al Khor Industrial Area 3",
       ar: "الوحدة من الشارع في رأس الخور الصناعية ٣",

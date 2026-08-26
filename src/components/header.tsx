@@ -29,7 +29,7 @@ export function Header({ locale }: { locale: Locale }) {
               <ClockIcon className="size-3.5 text-gold" />
               {locale === "ar"
                 ? "السبت – الخميس ٩:٠٠ – ١٩:٠٠"
-                : "Sat–Thu 9:00–19:00"}
+                : "Sat–Thu 9 AM – 7 PM"}
             </span>
           </div>
           <div className="flex items-center gap-6">

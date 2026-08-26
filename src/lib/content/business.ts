@@ -65,7 +65,13 @@ export const business = {
     tiktok: "https://www.tiktok.com/@exoticshine.uae",
     youtube: "https://youtube.com/@exoticshineuae",
   },
-  /** Friday is the studio's day off. */
+  /**
+   * Stored as 24-hour because that's what schema.org's
+   * openingHoursSpecification expects. Displayed as 12-hour per the client —
+   * see `formatHours` below.
+   *
+   * Friday is the studio's day off.
+   */
   hours: [
     { day: "Monday", open: "09:00", close: "19:00" },
     { day: "Tuesday", open: "09:00", close: "19:00" },
@@ -76,6 +82,39 @@ export const business = {
     { day: "Sunday", open: "09:00", close: "19:00" },
   ],
 } as const;
+
+/**
+ * "09:00" becomes "9:00 AM". The client asked for 12-hour throughout; the
+ * stored 24-hour values still feed the structured data untouched.
+ *
+ * Arabic keeps 24-hour with Arabic-Indic digits, which is how times are
+ * normally written in the UAE — AM/PM in an Arabic sentence reads as an
+ * English intrusion.
+ */
+export function formatTime(time: string, locale: "en" | "ar") {
+  const [h, m] = time.split(":").map(Number);
+
+  if (locale === "ar") {
+    // Drop the leading zero so it matches the hours written elsewhere in the
+    // Arabic copy, then swap to Arabic-Indic digits.
+    return `${h}:${String(m).padStart(2, "0")}`.replace(
+      /\d/g,
+      (d) => "٠١٢٣٤٥٦٧٨٩"[Number(d)],
+    );
+  }
+
+  const suffix = h < 12 ? "AM" : "PM";
+  const hour12 = h % 12 || 12;
+  return `${hour12}:${String(m).padStart(2, "0")} ${suffix}`;
+}
+
+export function formatHours(
+  entry: { open: string | null; close: string | null },
+  locale: "en" | "ar",
+) {
+  if (!entry.open || !entry.close) return null;
+  return `${formatTime(entry.open, locale)} – ${formatTime(entry.close, locale)}`;
+}
 
 export const accreditations = [
   {

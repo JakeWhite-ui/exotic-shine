@@ -320,7 +320,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
             <p className="mt-4 text-xs uppercase tracking-wider text-muted">
               {locale === "ar"
                 ? "السبت – الخميس ٩:٠٠ – ١٩:٠٠ · الجمعة مغلق"
-                : "Sat–Thu 9:00–19:00 · Friday closed"}
+                : "Sat–Thu 9 AM – 7 PM · Friday closed"}
             </p>
           </Card>
         </div>

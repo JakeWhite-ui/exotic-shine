@@ -3,7 +3,7 @@ import { Logo } from "@/components/logo";
 import { MailIcon, PhoneIcon, WhatsAppIcon } from "@/components/icons";
 import { Address } from "@/components/address";
 import { SocialLinks } from "@/components/social-links";
-import { business } from "@/lib/content/business";
+import { business, formatHours } from "@/lib/content/business";
 import { pillars, servicesInPillar } from "@/lib/content/services";
 import { ui } from "@/lib/content/ui";
 import { href, t, type Locale } from "@/lib/i18n";
@@ -114,10 +114,8 @@ export function Footer({ locale }: { locale: Locale }) {
               {business.hours.map((entry) => (
                 <li key={entry.day} className="flex justify-between gap-4">
                   <span>{entry.day}</span>
-                  <span className={entry.open ? "" : "text-spark"}>
-                    {entry.open
-                      ? `${entry.open} – ${entry.close}`
-                      : t(ui.labels.closed, locale)}
+                  <span className={entry.open ? "" : "text-spark"} dir="ltr">
+                    {formatHours(entry, locale) ?? t(ui.labels.closed, locale)}
                   </span>
                 </li>
               ))}

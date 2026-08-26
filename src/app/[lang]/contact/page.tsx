@@ -7,7 +7,7 @@ import { Address } from "@/components/address";
 import { SocialLinks } from "@/components/social-links";
 import { entranceShot } from "@/lib/content/studio";
 import Image from "next/image";
-import { business } from "@/lib/content/business";
+import { business, formatHours } from "@/lib/content/business";
 import { ui } from "@/lib/content/ui";
 import { isLocale, t, type Locale } from "@/lib/i18n";
 
@@ -125,9 +125,7 @@ export default async function ContactPage({
                   <li key={entry.day} className="flex justify-between gap-4">
                     <span>{entry.day}</span>
                     <span className={entry.open ? "" : "text-spark"} dir="ltr">
-                      {entry.open
-                        ? `${entry.open} – ${entry.close}`
-                        : t(ui.labels.closed, locale)}
+                      {formatHours(entry, locale) ?? t(ui.labels.closed, locale)}
                     </span>
                   </li>
                 ))}
