@@ -110,8 +110,8 @@ export const deepContent: Record<string, DeepContent> = {
       {
         title: { en: "Panel wipe and application", ar: "المسح والتطبيق" },
         body: {
-          en: "Every trace of polishing oil removed, then GTECHNIQ applied panel by panel in a controlled environment and levelled by hand.",
-          ar: "إزالة كل أثر لزيوت التلميع، ثم تطبيق GTECHNIQ قطعة بقطعة في بيئة مضبوطة وتسويته يدويًا.",
+          en: "Every trace of polishing oil removed, then the coating applied panel by panel in a controlled environment and levelled by hand.",
+          ar: "إزالة كل أثر لزيوت التلميع، ثم تطبيق الطبقة قطعة بقطعة في بيئة مضبوطة وتسويتها يدويًا.",
         },
       },
       {
@@ -123,7 +123,10 @@ export const deepContent: Record<string, DeepContent> = {
       },
     ],
     includes: [
-      { en: "GTECHNIQ accredited products and application", ar: "منتجات وتطبيق معتمد من GTECHNIQ" },
+      {
+        en: "Premium coating systems matched to your budget and coverage",
+        ar: "أنظمة طلاء فاخرة تُختار حسب ميزانيتك ومستوى التغطية",
+      },
       { en: "Multi-stage paint correction before coating", ar: "تصحيح طلاء متعدد المراحل قبل الطلاء السيراميكي" },
       { en: "Glass, wheel and trim coating options", ar: "خيارات طلاء الزجاج والجنوط والإطارات" },
       { en: "Annual inspection and rejuvenation", ar: "فحص وتجديد سنوي" },

@@ -176,20 +176,26 @@ export function hoursSummary(locale: "en" | "ar") {
   return `${range} ${times} · ${closedLabel}`;
 }
 
-export const accreditations = [
-  {
-    name: "XPEL",
-    label: { en: "Certified installer", ar: "منشآت معتمدة" } satisfies Translated,
-  },
-  {
-    name: "GTECHNIQ",
-    label: { en: "Accredited studio", ar: "استوديو معتمد" } satisfies Translated,
-  },
-  {
-    name: "3M",
-    label: { en: "Approved films", ar: "أفلام معتمدة" } satisfies Translated,
-  },
+/**
+ * Brands the studio actually works with, per the client on 26 Aug. GTECHNIQ
+ * was on the old site as an "accredited studio" claim and has been removed —
+ * the client's own list doesn't mention it, and an unbacked accreditation
+ * claim is the kind of thing a brand will ask you to take down.
+ *
+ * Deliberately framed as "brands we use" rather than as certifications, which
+ * is both what the client asked for and what we can stand behind. The XPEL
+ * installer certification stays because it backs the ten-year PPF warranty.
+ */
+export const brands = [
+  { name: "XPEL", label: { en: "Certified installer", ar: "منشآت معتمدة" } satisfies Translated },
+  { name: "3M", label: { en: "Approved films", ar: "أفلام معتمدة" } satisfies Translated },
+  { name: "UltraGuard", label: { en: "Protection systems", ar: "أنظمة حماية" } satisfies Translated },
 ];
+
+export const brandStatement: Translated = {
+  en: "We work with some of the industry's most trusted and premium brands, including XPEL, 3M, UltraGuard and other high-quality solutions. Depending on your requirements, your budget and the level of protection you're after, we'll recommend the right product — so every vehicle gets the result that suits it.",
+  ar: "نعمل بأفضل العلامات التجارية وأكثرها موثوقية في المجال، من بينها XPEL و3M وUltraGuard وحلول أخرى عالية الجودة. وبحسب متطلباتك وميزانيتك ومستوى الحماية الذي ترغب به، نرشّح لك المنتج المناسب — لتحصل كل سيارة على النتيجة التي تليق بها.",
+};
 
 /**
  * Claims that appear on the site.

@@ -4,7 +4,7 @@ import Image from "next/image";
 import { ButtonLink, Card, Eyebrow, Section } from "@/components/ui";
 import { Address } from "@/components/address";
 import { studioGallery, studioHero } from "@/lib/content/studio";
-import { accreditations, business } from "@/lib/content/business";
+import { brandStatement, brands, business } from "@/lib/content/business";
 import { pillars } from "@/lib/content/services";
 import { ui } from "@/lib/content/ui";
 import { href, isLocale, t, type Locale } from "@/lib/i18n";
@@ -12,7 +12,7 @@ import { href, isLocale, t, type Locale } from "@/lib/i18n";
 export const metadata: Metadata = {
   title: "About the studio",
   description:
-    "Exotic Shine is an XPEL-certified, GTECHNIQ-accredited car care studio in Ras Al Khor, Dubai — paint protection, coating, detailing and styling.",
+    "Exotic Shine is an XPEL-certified car care studio in Ras Al Khor, Dubai — paint protection, ceramic coating, detailing and styling.",
   alternates: {
     canonical: "/about",
     languages: { en: "/about", ar: "/ar/about" },
@@ -79,10 +79,13 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/about">) 
           <div className="space-y-5">
             <Card>
               <h2 className="font-display text-sm font-bold uppercase tracking-widest text-gold">
-                {locale === "ar" ? "الاعتمادات" : "Accreditations"}
+                {locale === "ar" ? "المنتجات" : "Products we use"}
               </h2>
-              <ul className="mt-5 space-y-4">
-                {accreditations.map((item) => (
+              <p className="mt-4 text-sm leading-relaxed text-muted">
+                {t(brandStatement, locale)}
+              </p>
+              <ul className="mt-5 space-y-4 border-t border-line-soft pt-5">
+                {brands.map((item) => (
                   <li key={item.name}>
                     <p className="font-display text-lg font-extrabold tracking-wider text-metal">
                       {item.name}

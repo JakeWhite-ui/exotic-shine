@@ -6,7 +6,8 @@ import { Reviews } from "@/components/reviews";
 import { Address } from "@/components/address";
 import { FaqSchema } from "@/components/schema";
 import {
-  accreditations,
+  brandStatement,
+  brands,
   business,
   hoursSummary,
   stats,
@@ -36,8 +37,8 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
             <p className="eyebrow flex items-center gap-3">
               <span aria-hidden className="h-px w-6 bg-gold" />
               {locale === "ar"
-                ? "استوديو معتمد في دبي"
-                : "XPEL & GTECHNIQ certified · Dubai"}
+                ? "استوديو معتمد من XPEL · دبي"
+                : "XPEL certified installer · Dubai"}
             </p>
 
             <h1 className="mt-6 text-4xl leading-[1.05] sm:text-6xl">
@@ -68,7 +69,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
             </div>
 
             <ul className="mt-12 flex flex-wrap gap-x-10 gap-y-4">
-              {accreditations.map((item) => (
+              {brands.map((item) => (
                 <li key={item.name}>
                   <p className="font-display text-lg font-extrabold tracking-wider text-metal">
                     {item.name}
@@ -126,6 +127,38 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
           ))}
         </div>
       </section>
+
+      <Section className="border-b border-line-soft">
+        <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
+          <SectionHead
+            eyebrow={locale === "ar" ? "المنتجات" : "Products"}
+            title={
+              locale === "ar"
+                ? "المواد التي نعمل بها"
+                : "What we put on your car"
+            }
+          />
+          <p className="text-lg leading-relaxed text-muted">
+            {t(brandStatement, locale)}
+          </p>
+        </div>
+
+        <ul className="mt-12 grid gap-4 sm:grid-cols-3">
+          {brands.map((item) => (
+            <li
+              key={item.name}
+              className="rounded-lg border border-line-soft bg-ink-card px-6 py-5 text-center"
+            >
+              <p className="font-display text-xl font-extrabold tracking-wider text-metal">
+                {item.name}
+              </p>
+              <p className="mt-1 text-xs uppercase tracking-wider text-muted">
+                {t(item.label, locale)}
+              </p>
+            </li>
+          ))}
+        </ul>
+      </Section>
 
       <Section>
         <SectionHead

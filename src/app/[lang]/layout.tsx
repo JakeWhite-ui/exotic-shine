@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     template: `%s | ${business.name} Dubai`,
   },
   description:
-    "XPEL-certified paint protection film, GTECHNIQ ceramic coating, window tinting and detailing in Ras Al Khor, Dubai. Ten-year PPF warranty.",
+    "XPEL-certified paint protection film, ceramic coating, window tinting and detailing in Ras Al Khor, Dubai. Ten-year PPF warranty.",
   openGraph: {
     siteName: business.legalName,
     type: "website",

@@ -31,7 +31,7 @@ export function LocalBusinessSchema() {
         name: business.legalName,
         alternateName: business.name,
         description:
-          "XPEL-certified paint protection film, GTECHNIQ ceramic coating, window tinting, detailing and vehicle styling in Ras Al Khor, Dubai.",
+          "XPEL-certified paint protection film, ceramic coating, window tinting, detailing and vehicle styling in Ras Al Khor, Dubai.",
         url: business.domain,
         telephone: business.phoneRaw,
         email: business.email,

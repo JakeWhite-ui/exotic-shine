@@ -29,8 +29,8 @@ const offers: {
       ar: "الفيلم الواقي والسيراميك معًا",
     },
     body: {
-      en: "Book full-body XPEL paint protection film and GTECHNIQ ceramic coating in the same visit and save AED 800, with the first annual rejuvenation included.",
-      ar: "احجز فيلم XPEL الواقي للهيكل الكامل مع طلاء GTECHNIQ السيراميكي في نفس الزيارة ووفّر ٨٠٠ درهم، مع تجديد سنوي أول مجاني.",
+      en: "Book full-body XPEL paint protection film and a premium ceramic coating in the same visit and save AED 800, with the first annual rejuvenation included.",
+      ar: "احجز فيلم XPEL الواقي للهيكل الكامل مع طلاء سيراميكي فاخر في نفس الزيارة ووفّر ٨٠٠ درهم، مع تجديد سنوي أول مجاني.",
     },
     terms: {
       en: "One vehicle per booking. Cannot be combined with other offers.",
