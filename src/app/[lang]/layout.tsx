@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     template: `%s | ${business.name} Dubai`,
   },
   description:
-    "XPEL-certified paint protection film, ceramic coating, window tinting and detailing in Ras Al Khor, Dubai. Ten-year PPF warranty.",
+    "Paint protection film, ceramic coating, window tinting and full detailing in Ras Al Khor, Dubai. Premium films from XPEL, 3M and UltraGuard.",
   openGraph: {
     siteName: business.legalName,
     type: "website",

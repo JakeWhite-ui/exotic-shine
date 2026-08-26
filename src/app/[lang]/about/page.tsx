@@ -12,7 +12,7 @@ import { href, isLocale, t, type Locale } from "@/lib/i18n";
 export const metadata: Metadata = {
   title: "About the studio",
   description:
-    "Exotic Shine is an XPEL-certified car care studio in Ras Al Khor, Dubai — paint protection, ceramic coating, detailing and styling.",
+    "Exotic Shine is a premium car care studio in Ras Al Khor, Dubai — paint protection, ceramic coating, detailing and styling.",
   alternates: {
     canonical: "/about",
     languages: { en: "/about", ar: "/ar/about" },

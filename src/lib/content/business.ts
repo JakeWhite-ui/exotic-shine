@@ -182,14 +182,24 @@ export function hoursSummary(locale: "en" | "ar") {
  * the client's own list doesn't mention it, and an unbacked accreditation
  * claim is the kind of thing a brand will ask you to take down.
  *
- * Deliberately framed as "brands we use" rather than as certifications, which
- * is both what the client asked for and what we can stand behind. The XPEL
- * installer certification stays because it backs the ten-year PPF warranty.
+ * Framed as "brands we use", not as certifications. The client listed all
+ * three the same way — as products they work with — and said nothing about
+ * being an accredited installer for any of them. "XPEL certified installer"
+ * was our own wording carried over from the old site, so it's gone too.
  */
 export const brands = [
-  { name: "XPEL", label: { en: "Certified installer", ar: "منشآت معتمدة" } satisfies Translated },
-  { name: "3M", label: { en: "Approved films", ar: "أفلام معتمدة" } satisfies Translated },
-  { name: "UltraGuard", label: { en: "Protection systems", ar: "أنظمة حماية" } satisfies Translated },
+  {
+    name: "XPEL",
+    label: { en: "Paint protection film", ar: "فيلم حماية الطلاء" } satisfies Translated,
+  },
+  {
+    name: "3M",
+    label: { en: "Films and wraps", ar: "أفلام وتغليف" } satisfies Translated,
+  },
+  {
+    name: "UltraGuard",
+    label: { en: "Protection systems", ar: "أنظمة حماية" } satisfies Translated,
+  },
 ];
 
 export const brandStatement: Translated = {
@@ -217,8 +227,11 @@ export const stats: {
     verified: true,
   },
   {
-    value: "10 yr",
-    label: { en: "PPF warranty", ar: "ضمان الفيلم الواقي" },
+    // Was "10 yr PPF warranty". XPEL's ten-year cover is granted through
+    // accredited installers, and the client hasn't confirmed that status —
+    // so the claim goes until they do. Open-seven-days is checkable today.
+    value: "7 days",
+    label: { en: "Open every day", ar: "مفتوح كل يوم" },
     verified: true,
   },
   {

@@ -37,8 +37,8 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
             <p className="eyebrow flex items-center gap-3">
               <span aria-hidden className="h-px w-6 bg-gold" />
               {locale === "ar"
-                ? "استوديو معتمد من XPEL · دبي"
-                : "XPEL certified installer · Dubai"}
+                ? "استوديو العناية الفاخرة · رأس الخور، دبي"
+                : "Premium car care studio · Ras Al Khor, Dubai"}
             </p>
 
             <h1 className="mt-6 text-4xl leading-[1.05] sm:text-6xl">

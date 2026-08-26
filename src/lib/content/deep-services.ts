@@ -51,7 +51,10 @@ export const deepContent: Record<string, DeepContent> = {
     ],
     includes: [
       { en: "Full front, track pack, or full body coverage", ar: "تغطية المقدمة الكاملة أو الحزمة الرياضية أو الهيكل بالكامل" },
-      { en: "XPEL film with a ten-year manufacturer warranty", ar: "فيلم XPEL بضمان مصنّع عشر سنوات" },
+      {
+        en: "Premium films from XPEL, 3M and UltraGuard, chosen to your budget",
+        ar: "أفلام فاخرة من XPEL و3M وUltraGuard، تُختار حسب ميزانيتك",
+      },
       { en: "Paint correction included before application", ar: "تصحيح الطلاء مشمول قبل التركيب" },
       { en: "Headlight and door cup protection", ar: "حماية المصابيح ومقابض الأبواب" },
     ],
@@ -66,8 +69,8 @@ export const deepContent: Record<string, DeepContent> = {
       {
         question: { en: "Will it yellow in the Dubai sun?", ar: "هل يصفرّ تحت شمس دبي؟" },
         answer: {
-          en: "Modern XPEL film has UV inhibitors built into the topcoat and carries a warranty against yellowing. The film that yellows is old technology or an unbranded import.",
-          ar: "فيلم XPEL الحديث يحتوي على مثبطات للأشعة فوق البنفسجية ضمن طبقته العليا، ومضمون ضد الاصفرار. الفيلم الذي يصفرّ إما تقنية قديمة أو استيراد مجهول المصدر.",
+          en: "Not the films we fit. Modern top-tier film has UV inhibitors built into the topcoat. The film that yellows is old technology or an unbranded import — which is exactly why we're specific about which brands we use.",
+          ar: "ليس الأفلام التي نركّبها. الأفلام الحديثة عالية الجودة تحتوي على مثبطات للأشعة فوق البنفسجية ضمن طبقتها العليا. أما الذي يصفرّ فهو تقنية قديمة أو استيراد مجهول المصدر — ولهذا تحديدًا نحدد بوضوح العلامات التي نعمل بها.",
         },
       },
       {
@@ -202,7 +205,10 @@ export const deepContent: Record<string, DeepContent> = {
       { en: "Heat-rejecting ceramic and carbon films", ar: "أفلام سيراميكية وكربونية عازلة للحرارة" },
       { en: "UAE-legal VLT percentages advised up front", ar: "نسب تظليل مطابقة للقانون الإماراتي نوضحها مسبقًا" },
       { en: "Windscreen strips and full front options", ar: "خيارات شريط الزجاج الأمامي والتظليل الكامل" },
-      { en: "Lifetime warranty against bubbling and fade", ar: "ضمان مدى الحياة ضد الفقاعات والبهتان" },
+      {
+        en: "Manufacturer warranty against bubbling and fade",
+        ar: "ضمان من المصنّع ضد الفقاعات والبهتان",
+      },
     ],
     faqs: [
       {

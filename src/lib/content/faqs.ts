@@ -72,8 +72,8 @@ export const generalFaqs: { question: Translated; answer: Translated }[] = [
       ar: "هل تقدمون ضمانًا؟",
     },
     answer: {
-      en: "XPEL paint protection film carries up to ten years from the manufacturer, ceramic coatings three to five depending on the system, and our tint film is warranted for life against bubbling and fade.",
-      ar: "فيلم XPEL الواقي بضمان مصنّع يصل إلى عشر سنوات، والطلاء السيراميكي من ثلاث إلى خمس سنوات حسب النظام، وأفلام التظليل لدينا مضمونة مدى الحياة ضد الفقاعات والبهتان.",
+      en: "Yes, and the cover depends on which film or coating you go with — the premium systems carry considerably longer terms than the entry ones. We'll tell you exactly what's covered, and for how long, as part of the quote rather than after the job.",
+      ar: "نعم، وتختلف مدة التغطية حسب الفيلم أو الطبقة التي تختارها — فالأنظمة الفاخرة تحمل ضمانات أطول بكثير من الأساسية. نوضح لك بالضبط ما يشمله الضمان ومدته ضمن عرض السعر، لا بعد انتهاء العمل.",
     },
   },
   {
