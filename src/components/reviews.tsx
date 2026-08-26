@@ -58,24 +58,17 @@ function Row({
   locale,
   ratingLabel,
   duration,
-  reverse = false,
 }: {
   items: Review[];
   locale: Locale;
   ratingLabel: string;
   duration: string;
-  reverse?: boolean;
 }) {
   return (
     <div className="marquee-viewport overflow-hidden">
       <div
         className="marquee-track py-1"
-        style={
-          {
-            "--marquee-duration": duration,
-            "--marquee-direction": reverse ? "reverse" : "normal",
-          } as React.CSSProperties
-        }
+        style={{ "--marquee-duration": duration } as React.CSSProperties}
       >
         <div className="flex">
           {items.map((review) => (
@@ -107,17 +100,14 @@ function Row({
 }
 
 /**
- * Two rows drifting in opposite directions. Fifteen cards in one line would
- * take a minute to come round; split across two it always looks busy.
+ * All fourteen in a single line. The duration is set so the track moves at a
+ * readable pace rather than a fixed loop time — with this many cards a short
+ * duration would whip past.
  */
 export function Reviews({ locale }: { locale: Locale }) {
   const { rating, reviewCount, profile } = business.google;
   const ratingLabel =
     locale === "ar" ? `${rating} من ٥ نجوم` : `${rating} out of 5 stars`;
-
-  const half = Math.ceil(reviews.length / 2);
-  const topRow = reviews.slice(0, half);
-  const bottomRow = reviews.slice(half);
 
   return (
     <div>
@@ -138,19 +128,12 @@ export function Reviews({ locale }: { locale: Locale }) {
         </span>
       </a>
 
-      <div className="mt-8 space-y-5">
+      <div className="mt-8">
         <Row
-          items={topRow}
+          items={reviews}
           locale={locale}
           ratingLabel={ratingLabel}
-          duration="80s"
-        />
-        <Row
-          items={bottomRow}
-          locale={locale}
-          ratingLabel={ratingLabel}
-          duration="95s"
-          reverse
+          duration="140s"
         />
       </div>
     </div>
