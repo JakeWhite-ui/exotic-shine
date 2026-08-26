@@ -5,7 +5,12 @@ import { Faq } from "@/components/faq";
 import { Reviews } from "@/components/reviews";
 import { Address } from "@/components/address";
 import { FaqSchema } from "@/components/schema";
-import { accreditations, business, stats } from "@/lib/content/business";
+import {
+  accreditations,
+  business,
+  hoursSummary,
+  stats,
+} from "@/lib/content/business";
 import { generalFaqs } from "@/lib/content/faqs";
 import { featuredWork, imageFor } from "@/lib/content/media";
 import { studioGallery, studioHero } from "@/lib/content/studio";
@@ -318,9 +323,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
               {business.phone}
             </a>
             <p className="mt-4 text-xs uppercase tracking-wider text-muted">
-              {locale === "ar"
-                ? "السبت – الخميس ٩:٠٠ – ١٩:٠٠ · الجمعة مغلق"
-                : "Sat–Thu 9 AM – 7 PM · Friday closed"}
+              {hoursSummary(locale)}
             </p>
           </Card>
         </div>

@@ -11,7 +11,7 @@ import {
   WhatsAppIcon,
 } from "@/components/icons";
 import { shortAddress } from "@/components/address";
-import { business } from "@/lib/content/business";
+import { business, hoursSummary } from "@/lib/content/business";
 import { ui } from "@/lib/content/ui";
 import { href, t, type Locale } from "@/lib/i18n";
 
@@ -27,9 +27,7 @@ export function Header({ locale }: { locale: Locale }) {
             </span>
             <span className="flex items-center gap-2">
               <ClockIcon className="size-3.5 text-gold" />
-              {locale === "ar"
-                ? "السبت – الخميس ٩:٠٠ – ١٩:٠٠"
-                : "Sat–Thu 9 AM – 7 PM"}
+              {hoursSummary(locale)}
             </span>
           </div>
           <div className="flex items-center gap-6">

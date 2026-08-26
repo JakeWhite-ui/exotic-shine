@@ -116,6 +116,60 @@ export function formatHours(
   return `${formatTime(entry.open, locale)} – ${formatTime(entry.close, locale)}`;
 }
 
+const shortDay: Record<string, { en: string; ar: string }> = {
+  Monday: { en: "Mon", ar: "الاثنين" },
+  Tuesday: { en: "Tue", ar: "الثلاثاء" },
+  Wednesday: { en: "Wed", ar: "الأربعاء" },
+  Thursday: { en: "Thu", ar: "الخميس" },
+  Friday: { en: "Fri", ar: "الجمعة" },
+  Saturday: { en: "Sat", ar: "السبت" },
+  Sunday: { en: "Sun", ar: "الأحد" },
+};
+
+/** The UAE working week starts on Saturday, so summarise in that order. */
+const weekOrder = [
+  "Saturday",
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+];
+
+/**
+ * The one-line version — "Sat–Thu 9:00 AM – 7:00 PM · Friday closed".
+ *
+ * Derived from the same `hours` array the day-by-day tables use, so the
+ * summary in the top bar can't drift from the table in the footer. Both were
+ * hand-written strings before and had already diverged: one said "9 AM – 7 PM",
+ * the other "9:00 AM – 7:00 PM".
+ */
+export function hoursSummary(locale: "en" | "ar") {
+  const ordered = weekOrder.map(
+    (day) => business.hours.find((h) => h.day === day)!,
+  );
+
+  const open = ordered.filter((entry) => entry.open);
+  const closed = ordered.filter((entry) => !entry.open);
+  if (!open.length) return null;
+
+  const first = shortDay[open[0].day][locale];
+  const last = shortDay[open[open.length - 1].day][locale];
+  const range = open.length === 1 ? first : `${first}–${last}`;
+  const times = formatHours(open[0], locale);
+
+  if (!closed.length) return `${range} ${times}`;
+
+  const closedNames = closed
+    .map((entry) => shortDay[entry.day][locale])
+    .join(", ");
+  const closedLabel =
+    locale === "ar" ? `${closedNames} مغلق` : `${closedNames} closed`;
+
+  return `${range} ${times} · ${closedLabel}`;
+}
+
 export const accreditations = [
   {
     name: "XPEL",
