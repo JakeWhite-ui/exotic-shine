@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ButtonLink, Card, Eyebrow, Section, SectionHead } from "@/components/ui";
 import { BreadcrumbSchema, FaqSchema, ServiceSchema } from "@/components/schema";
 import { Faq } from "@/components/faq";
+import { LeadForm } from "@/components/lead-form";
 import { deepContent } from "@/lib/content/deep-services";
+import { imageFor } from "@/lib/content/media";
 import { deepServices, getPillar, getService } from "@/lib/content/services";
 import { ui } from "@/lib/content/ui";
 import { business } from "@/lib/content/business";
@@ -135,13 +138,19 @@ export default async function ServicePage({
             </ul>
           </div>
 
-          <div className="flex min-h-64 items-center justify-center rounded-md border border-dashed border-line bg-ink-card p-8 text-center">
-            <p className="max-w-xs text-sm leading-relaxed text-muted">
-              {locale === "ar"
-                ? `مكان صور «قبل وبعد» لخدمة ${t(service.name, locale)} — بانتظار صور الاستوديو.`
-                : `Before-and-after slot for ${service.name.en} — waiting on the studio's own photos.`}
-            </p>
-          </div>
+          {/* No image for this service yet — render nothing rather than an
+              empty placeholder box. */}
+          {imageFor(slug) ? (
+            <div className="relative min-h-64 overflow-hidden rounded-lg border border-line-soft">
+              <Image
+                src={imageFor(slug)}
+                alt={t(service.name, locale)}
+                fill
+                sizes="(max-width: 1024px) 100vw, 46vw"
+                className="object-cover"
+              />
+            </div>
+          ) : null}
         </div>
       </Section>
 
@@ -157,6 +166,25 @@ export default async function ServicePage({
               answer: t(faq.answer, locale),
             }))}
           />
+        </div>
+      </Section>
+
+      <Section className="border-t border-line bg-ink-raised">
+        <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+          <SectionHead
+            eyebrow={t(ui.sections.contactEyebrow, locale)}
+            title={
+              locale === "ar"
+                ? `اطلب سعرًا لـ${t(service.name, locale)}`
+                : `Get a price for ${service.name.en.toLowerCase()}`
+            }
+            lede={
+              locale === "ar"
+                ? "أرسل طراز سيارتك وسنرد بسعر ثابت ومدة إنجاز."
+                : "Send us the car and you'll get a fixed price and a turnaround, same day."
+            }
+          />
+          <LeadForm locale={locale} presetService={service.name.en} />
         </div>
       </Section>
 

@@ -4,6 +4,8 @@ import { Card, Section, SectionHead } from "@/components/ui";
 import { LeadForm } from "@/components/lead-form";
 import { MailIcon, PhoneIcon, WhatsAppIcon } from "@/components/icons";
 import { Address } from "@/components/address";
+import { entranceShot } from "@/lib/content/studio";
+import Image from "next/image";
 import { business } from "@/lib/content/business";
 import { ui } from "@/lib/content/ui";
 import { isLocale, t, type Locale } from "@/lib/i18n";
@@ -80,14 +82,30 @@ export default async function ContactPage({
               </div>
             </Card>
 
-            <Card>
-              <h2 className="font-display text-sm font-bold uppercase tracking-widest text-gold">
-                {t(ui.labels.address, locale)}
-              </h2>
-              <Address
-                locale={locale}
-                className="mt-4 text-sm leading-relaxed text-muted"
-              />
+            <Card className="overflow-hidden p-0">
+              <div className="relative aspect-4/3">
+                <Image
+                  src={entranceShot.src}
+                  alt={t(entranceShot.alt, locale)}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 32vw"
+                  className="object-cover"
+                />
+              </div>
+              <div className="p-6">
+                <h2 className="font-display text-sm font-bold uppercase tracking-widest text-gold">
+                  {t(ui.labels.address, locale)}
+                </h2>
+                <Address
+                  locale={locale}
+                  className="mt-4 text-sm leading-relaxed text-muted"
+                />
+                <p className="mt-4 text-xs leading-relaxed text-muted">
+                  {locale === "ar"
+                    ? "ابحث عن اللوحة المضاءة والسجادة الحمراء عند المدخل رقم ٩."
+                    : "Look for the lit sign and the red apron at door 09."}
+                </p>
+              </div>
             </Card>
 
             <Card>

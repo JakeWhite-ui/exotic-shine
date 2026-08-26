@@ -1,11 +1,15 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ButtonLink, Card, Section, SectionHead } from "@/components/ui";
 import { Faq } from "@/components/faq";
+import { Reviews } from "@/components/reviews";
 import { Address } from "@/components/address";
 import { FaqSchema } from "@/components/schema";
 import { accreditations, business, stats } from "@/lib/content/business";
 import { generalFaqs } from "@/lib/content/faqs";
-import { pillars, servicesInPillar } from "@/lib/content/services";
+import { featuredWork, imageFor } from "@/lib/content/media";
+import { studioGallery, studioHero } from "@/lib/content/studio";
+import { getService, pillars, servicesInPillar } from "@/lib/content/services";
 import { ui } from "@/lib/content/ui";
 import { href, isLocale, t } from "@/lib/i18n";
 import { notFound } from "next/navigation";
@@ -73,12 +77,31 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
           </div>
 
           <div className="relative">
-            <div className="flex aspect-4/5 items-center justify-center rounded-md border border-dashed border-line bg-ink-card p-8 text-center">
-              <p className="max-w-xs text-sm leading-relaxed text-muted">
-                {locale === "ar"
-                  ? "مكان صورة العمل الرئيسية — بانتظار صور الاستوديو."
-                  : "Hero shot slot — waiting on the studio's own photography."}
-              </p>
+            <div className="relative aspect-4/3 overflow-hidden rounded-lg border border-line-soft">
+              <Image
+                src={studioHero.src}
+                alt={t(studioHero.alt, locale)}
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 44vw"
+                className="object-cover"
+              />
+              <div
+                aria-hidden
+                className="absolute inset-0 bg-linear-to-t from-ink/80 via-transparent to-transparent"
+              />
+              <div className="absolute inset-x-4 bottom-4 rounded-md border border-gold-deep bg-ink/80 px-4 py-3 backdrop-blur-sm">
+                <p className="font-display text-xs font-bold uppercase tracking-wider text-gold">
+                  {locale === "ar"
+                    ? "الاستوديو · رأس الخور"
+                    : "Our unit · Ras Al Khor"}
+                </p>
+                <p className="mt-0.5 text-xs text-muted">
+                  {locale === "ar"
+                    ? "مستودع رقم ٩، المنطقة الصناعية ٣"
+                    : "Warehouse 09, Industrial Area 3"}
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -139,6 +162,99 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
         </div>
       </Section>
 
+      <Section className="border-t border-line bg-ink-raised">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <SectionHead
+            eyebrow={t(ui.sections.workEyebrow, locale)}
+            title={locale === "ar" ? "من داخل الاستوديو" : "Inside the studio"}
+          />
+          <Link
+            href={href(locale, "/gallery")}
+            className="font-display text-xs font-bold uppercase tracking-wider text-gold hover:text-gold-bright"
+          >
+            {t(ui.cta.viewWork, locale)} →
+          </Link>
+        </div>
+
+        <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {featuredWork.slice(0, 6).map((slug) => {
+            const service = getService(slug);
+            if (!service) return null;
+            return (
+              <li key={slug}>
+                <Link
+                  href={href(
+                    locale,
+                    service.deep
+                      ? `/service/${slug}`
+                      : `/${service.pillar}#${slug}`,
+                  )}
+                  className="group relative block aspect-4/3 overflow-hidden rounded-lg border border-line-soft"
+                >
+                  <Image
+                    src={imageFor(slug)}
+                    alt={t(service.name, locale)}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div
+                    aria-hidden
+                    className="absolute inset-0 bg-linear-to-t from-ink via-ink/25 to-transparent"
+                  />
+                  <p className="absolute inset-x-4 bottom-4 font-display text-sm font-bold uppercase tracking-wider text-cream">
+                    {t(service.name, locale)}
+                  </p>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </Section>
+
+      <Section className="border-t border-line">
+        <SectionHead
+          eyebrow={locale === "ar" ? "المكان" : "The unit"}
+          title={
+            locale === "ar"
+              ? "المكان الذي ستترك سيارتك فيه"
+              : "Where you'll be leaving your car"
+          }
+          lede={
+            locale === "ar"
+              ? "أرضية رخامية، وإضاءة مضبوطة، ومناطق معزولة عن الغبار. ليست ورشة في زاوية مرآب."
+              : "Marble floor, controlled lighting, dust-sealed bays. Paint work needs a clean room, not a corner of a garage."
+          }
+        />
+
+        <ul className="mt-10 grid gap-4 sm:grid-cols-3">
+          {studioGallery.slice(0, 3).map((shot) => (
+            <li
+              key={shot.src}
+              className="relative aspect-3/4 overflow-hidden rounded-lg border border-line-soft"
+            >
+              <Image
+                src={shot.src}
+                alt={t(shot.alt, locale)}
+                fill
+                sizes="(max-width: 640px) 100vw, 32vw"
+                className="object-cover"
+              />
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      <Section className="border-t border-line bg-ink-raised">
+        <SectionHead
+          eyebrow={t(ui.sections.reviewsEyebrow, locale)}
+          title={t(ui.sections.reviewsTitle, locale)}
+        />
+        <div className="mt-10">
+          <Reviews locale={locale} />
+        </div>
+      </Section>
+
       <Section className="border-t border-line">
         <SectionHead
           eyebrow={t(ui.sections.faqEyebrow, locale)}
@@ -154,7 +270,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
         </div>
       </Section>
 
-      <Section className="border-t border-line bg-ink-raised">
+      <Section className="border-t border-line">
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
           <div>
             <SectionHead

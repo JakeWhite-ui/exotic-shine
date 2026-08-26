@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import { ButtonLink, Card, Eyebrow, Section } from "@/components/ui";
 import { Address } from "@/components/address";
+import { studioGallery, studioHero } from "@/lib/content/studio";
 import { accreditations, business } from "@/lib/content/business";
 import { pillars } from "@/lib/content/services";
 import { ui } from "@/lib/content/ui";
@@ -24,8 +26,22 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/about">) 
 
   return (
     <>
-      <section className="border-b border-line bg-ink-raised">
-        <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
+      <section className="relative border-b border-line bg-ink-raised">
+        <div className="absolute inset-0">
+          <Image
+            src={studioHero.src}
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover opacity-25"
+          />
+          <div
+            aria-hidden
+            className="absolute inset-0 bg-linear-to-r from-ink via-ink/85 to-ink/40"
+          />
+        </div>
+        <div className="relative mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
           <Eyebrow>{t(ui.nav.about, locale)}</Eyebrow>
           <h1 className="mt-5 max-w-3xl text-4xl sm:text-5xl">
             {locale === "ar"
@@ -121,6 +137,28 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/about">) 
             {t(ui.cta.viewServices, locale)}
           </ButtonLink>
         </div>
+      </Section>
+
+      <Section className="border-t border-line">
+        <h2 className="text-3xl">
+          {locale === "ar" ? "جولة في المكان" : "A look around"}
+        </h2>
+        <ul className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+          {studioGallery.map((shot) => (
+            <li
+              key={shot.src}
+              className="relative aspect-3/4 overflow-hidden rounded-lg border border-line-soft"
+            >
+              <Image
+                src={shot.src}
+                alt={t(shot.alt, locale)}
+                fill
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 24vw"
+                className="object-cover"
+              />
+            </li>
+          ))}
+        </ul>
       </Section>
     </>
   );

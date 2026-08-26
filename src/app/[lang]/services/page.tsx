@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Eyebrow, Section } from "@/components/ui";
+import { imageFor } from "@/lib/content/media";
 import { pillars, servicesInPillar } from "@/lib/content/services";
 import { ui } from "@/lib/content/ui";
 import { href, isLocale, t, type Locale } from "@/lib/i18n";
@@ -68,8 +70,20 @@ export default async function ServicesPage({
                       ? `/service/${service.slug}`
                       : `/${pillar.id}#${service.slug}`,
                   )}
-                  className="flex h-full flex-col rounded-md border border-line-soft bg-ink-card p-5 transition-colors hover:border-gold-deep"
+                  className="group flex h-full flex-col overflow-hidden rounded-lg border border-line-soft bg-ink-card transition-colors hover:border-gold-deep"
                 >
+                  {imageFor(service.slug) ? (
+                    <div className="relative aspect-16/9 overflow-hidden">
+                      <Image
+                        src={imageFor(service.slug)}
+                        alt=""
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    </div>
+                  ) : null}
+                  <div className="flex flex-1 flex-col p-5">
                   <div className="flex items-start justify-between gap-3">
                     <h3 className="text-base leading-snug">
                       {t(service.name, locale)}
@@ -83,6 +97,7 @@ export default async function ServicesPage({
                   <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted">
                     {t(service.short, locale)}
                   </p>
+                  </div>
                 </Link>
               </li>
             ))}

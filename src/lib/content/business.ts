@@ -34,9 +34,22 @@ export const business = {
       city: { en: "Dubai", ar: "دبي" },
       country: { en: "United Arab Emirates", ar: "الإمارات العربية المتحدة" },
     },
-    // TODO: replace with surveyed coordinates once Abdul confirms the unit pin.
-    lat: 25.1749,
-    lng: 55.3573,
+    // Decoded from the plus code on the Google Business Profile — "59JJ+7G
+    // Dubai", full code 7HQQ59JJ+7G. See scripts/decode-pluscode.py.
+    lat: 25.180687,
+    lng: 55.381312,
+    plusCode: "7HQQ59JJ+7G",
+  },
+  /**
+   * Live Google Business Profile: 5.0 from 16 reviews, owner replies to each
+   * one. Ask Abdul for the canonical share link — this search URL resolves to
+   * the profile but a place-id link would be sturdier.
+   */
+  google: {
+    profile:
+      "https://www.google.com/maps/search/?api=1&query=Exotic+Shine+Motor+Services+Ras+Al+Khor+Dubai",
+    rating: 5.0,
+    reviewCount: 16,
   },
   social: {
     instagram: "https://www.instagram.com/exoticshine.uae",
@@ -72,11 +85,13 @@ export const accreditations = [
 ];
 
 /**
- * Claims that appear on the site and inside structured data.
+ * Claims that appear on the site.
  *
- * `verified: false` means Abdul has not confirmed the number yet — those are
- * rendered as plain copy and deliberately kept out of the JSON-LD so we never
- * hand Google a review count we cannot stand behind.
+ * Every one of these is now checkable. The old site's "500+ cars protected",
+ * "1,200+ happy customers" and "15+ certified technicians" had no source
+ * behind them, so they're gone — replaced by the live Google rating, the
+ * warranty term, the real turnaround and the service count. Keep it that way:
+ * if a number can't be backed up, it doesn't belong here.
  */
 export const stats: {
   value: string;
@@ -84,9 +99,9 @@ export const stats: {
   verified: boolean;
 }[] = [
   {
-    value: "500+",
-    label: { en: "Cars protected", ar: "سيارة تمت حمايتها" },
-    verified: false,
+    value: "5.0",
+    label: { en: "Rated on Google", ar: "تقييم غوغل" },
+    verified: true,
   },
   {
     value: "10 yr",
@@ -99,8 +114,8 @@ export const stats: {
     verified: true,
   },
   {
-    value: "15+",
-    label: { en: "Certified technicians", ar: "فني معتمد" },
-    verified: false,
+    value: "24",
+    label: { en: "Services under one roof", ar: "خدمة تحت سقف واحد" },
+    verified: true,
   },
 ];

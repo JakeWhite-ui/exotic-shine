@@ -14,10 +14,12 @@ function JsonLd({ data }: { data: object }) {
  * AutoRepair is the closest schema.org type to a detailing studio and is one
  * of the types Google surfaces in local results.
  *
- * Note there is deliberately no `aggregateRating` here. The old site claimed
- * "98% 5-star reviews" with no source behind it; marking that up as
- * structured data would be handing Google a number nobody can back. Once the
- * Google Business Profile is connected we can pull real ratings instead.
+ * There is deliberately no `aggregateRating` here even though the studio has
+ * a genuine 5.0 from 16 reviews. Those reviews live on Google, and Google's
+ * structured data policy says review snippets must not be used for ratings
+ * collected from another site. Google surfaces that score natively in Maps
+ * and the local pack; re-declaring it here buys nothing and risks a manual
+ * action. The profile is listed under `sameAs` so the two are linked.
  */
 export function LocalBusinessSchema() {
   return (
@@ -52,7 +54,8 @@ export function LocalBusinessSchema() {
           { "@type": "City", name: "Sharjah" },
           { "@type": "City", name: "Abu Dhabi" },
         ],
-        sameAs: Object.values(business.social),
+        hasMap: business.google.profile,
+        sameAs: [...Object.values(business.social), business.google.profile],
         openingHoursSpecification: business.hours
           .filter((entry) => entry.open)
           .map((entry) => ({

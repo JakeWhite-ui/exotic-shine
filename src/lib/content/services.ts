@@ -146,7 +146,7 @@ export const services: Service[] = [
     pillar: "enhance",
     deep: true,
     name: {
-      en: "Full Vehicle Respray & Paint Jobs",
+      en: "Full Vehicle Respray / Paint Jobs",
       ar: "إعادة الدهان الكامل",
     },
     short: {
@@ -235,7 +235,10 @@ export const services: Service[] = [
     slug: "car-wrapping",
     pillar: "elevate",
     deep: true,
-    name: { en: "Colour Change Wrapping", ar: "تغليف وتغيير اللون" },
+    name: {
+      en: "Vehicle Wrapping (Colour Change Wraps)",
+      ar: "تغليف السيارة وتغيير اللون",
+    },
     short: {
       en: "Satin, gloss, chrome or matte across the whole car. Your factory paint stays untouched underneath, and it comes off cleanly when you want it gone.",
       ar: "ساتان أو لامع أو كروم أو مطفي على كامل السيارة. طلاء المصنع يبقى سليمًا تحته، ويُزال بنظافة متى شئت.",
@@ -271,7 +274,10 @@ export const services: Service[] = [
   {
     slug: "off-road-accessories",
     pillar: "elevate",
-    name: { en: "Off-Road Accessories", ar: "تجهيزات الطرق الوعرة" },
+    name: {
+      en: "Off-Road Accessories Installation",
+      ar: "تركيب تجهيزات الطرق الوعرة",
+    },
     short: {
       en: "Recovery points, snorkels, rock sliders, bull bars and light bars — specified for desert running, not for the car park.",
       ar: "نقاط سحب، وشنوركل، وحماية جانبية، ومصدات أمامية، وكشافات — مختارة للاستخدام الصحراوي الفعلي لا للمظهر.",

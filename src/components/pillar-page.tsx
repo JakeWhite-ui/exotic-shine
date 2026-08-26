@@ -1,11 +1,20 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ButtonLink, Eyebrow, Section } from "@/components/ui";
 import { BreadcrumbSchema } from "@/components/schema";
+import { imageFor } from "@/lib/content/media";
 import { getPillar, servicesInPillar, type PillarId } from "@/lib/content/services";
 import { ui } from "@/lib/content/ui";
 import { href, isLocale, t, type Locale } from "@/lib/i18n";
+
+/** One representative shot per pillar, dimmed behind the heading. */
+const pillarHeroes: Record<PillarId, string> = {
+  protect: "paint-protection-film",
+  enhance: "paint-correction",
+  elevate: "car-wrapping",
+};
 
 const metaDescriptions: Record<PillarId, string> = {
   protect:
@@ -44,8 +53,23 @@ export async function PillarPage({
 
   return (
     <>
-      <section className="border-b border-line bg-ink-raised">
-        <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
+      <section className="relative border-b border-line bg-ink-raised">
+        <div className="absolute inset-0">
+          <Image
+            src={imageFor(pillarHeroes[id])}
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover opacity-25"
+          />
+          <div
+            aria-hidden
+            className="absolute inset-0 bg-linear-to-r from-ink via-ink/85 to-ink/40"
+          />
+        </div>
+
+        <div className="relative mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
           <Eyebrow>
             {items.length} {t(ui.labels.servicesCount, locale)}
           </Eyebrow>

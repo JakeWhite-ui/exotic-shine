@@ -29,12 +29,30 @@ Arabic lives under `/ar/*`. `src/proxy.ts` rewrites root requests into
 
 These are the only things standing between this and launch.
 
-**Photos.** `src/lib/content/gallery.ts` has six entries with no image paths.
-Drop files into `public/gallery/` and fill in `before` and `after` — the
-comparison slider renders automatically. Entries without paths show a labelled
-empty slot on purpose, so the page tells you what's outstanding rather than
-hiding it. Same for the hero slot on `/` and the before/after slot on each
-deep service page.
+**Before/after photos.** Two photo sets are in place, neither of which is
+before/after:
+
+- `src/lib/content/studio.ts` — 17 real photographs of the unit, sent by the
+  client on 25 August. Their floor, their signage, their cars, their plates.
+  These carry the homepage hero, the studio strip, the about page and the
+  contact card.
+- `src/lib/content/media.ts` — nine branded marketing images carried over from
+  the old site. They cover the service cards, pillar banners and deep pages.
+  Note these have the badge burned into a corner and are not documentary.
+
+The before/after pairs are still the thing that sells detailing work, and
+they're still outstanding. **The comparison section on `/gallery` is hidden
+while none of them have images** — it reappears on its own as soon as one
+entry has both a `before` and an `after` path.
+
+Only one service card runs on a real photo so far: paint correction, cut from
+the client's clip of a technician polishing a bonnet. The other eight are
+still the branded marketing set. To replace them we need one clear shot per
+service, taken in the unit.
+`src/lib/content/gallery.ts` has six entries waiting: drop files into
+`public/gallery/`, fill in `before` and `after`, and the comparison slider
+renders itself. Entries without paths show a labelled empty slot on purpose,
+so the page states what's missing rather than hiding it.
 
 **Prices.** `src/lib/content/pricing.ts` — every cell is `null`, which renders
 as "on request". Fill in numbers to publish. First confirm pricing actually
@@ -93,6 +111,8 @@ work without JavaScript, which matters because they're also FAQPage markup.
   has exactly one, verified.
 - No JSON-LD, no sitemap, no robots.txt. All three now present.
 - 11 MB of gallery images served at 6084×3396 and displayed at 323px, bypassing
-  the image optimiser. Everything here goes through `next/image`.
+  the image optimiser. Same nine photos, re-encoded to 1600px WebP, are now
+  1.2 MB on disk — and the homepage actually ships 547 KB of images because
+  `next/image` serves per-viewport sizes. That's a 20× cut.
 - `<title>` was literally "Homepage", and the meta description said "car
   detailing hazards" instead of services.
