@@ -53,8 +53,19 @@ export function Header({ locale }: { locale: Locale }) {
         </div>
       </div>
 
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-5 py-4 sm:px-8">
-        <Logo locale={locale} priority className="h-10 sm:h-11" />
+      {/*
+        Tight vertical padding: the full lockup is 1.6:1, so it needs real
+        height to stay legible, and the header is sticky — every pixel here is
+        taken off the reading area on every scroll.
+      */}
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-5 py-2 sm:px-8">
+        <Logo
+          locale={locale}
+          variant="full"
+          priority
+          sizes="240px"
+          className="h-16 sm:h-20"
+        />
 
         <nav aria-label="Main" className="hidden lg:block">
           <ul className="flex items-center gap-6">
