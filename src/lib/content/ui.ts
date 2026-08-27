@@ -44,6 +44,8 @@ export const ui = {
     findUs: { en: "Find the studio", ar: "موقع الاستوديو" },
     followUs: { en: "Follow", ar: "تابعنا" },
     language: { en: "العربية", ar: "English" },
+    themeLight: { en: "Switch to light mode", ar: "التبديل إلى الوضع الفاتح" },
+    themeDark: { en: "Switch to dark mode", ar: "التبديل إلى الوضع الداكن" },
     menu: { en: "Menu", ar: "القائمة" },
     close: { en: "Close", ar: "إغلاق" },
   },

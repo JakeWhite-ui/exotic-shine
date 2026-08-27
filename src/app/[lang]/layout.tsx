@@ -6,6 +6,7 @@ import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { WhatsAppFab } from "@/components/whatsapp-fab";
 import { LocalBusinessSchema } from "@/components/schema";
+import { themeScript } from "@/components/theme-toggle";
 import { business } from "@/lib/content/business";
 import { dirOf, isLocale, locales } from "@/lib/i18n";
 
@@ -64,7 +65,11 @@ export default async function LocaleLayout({
       lang={lang}
       dir={dirOf(lang)}
       className={`${archivo.variable} ${inter.variable} ${plexArabic.variable} h-full`}
+      suppressHydrationWarning
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className="flex min-h-full flex-col bg-ink text-cream">
         <a
           href="#main"

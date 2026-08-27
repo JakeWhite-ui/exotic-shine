@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/components/link";
 import { notFound } from "next/navigation";
 import { BeforeAfter } from "@/components/before-after";
 import { ButtonLink, Eyebrow, Section, SectionHead } from "@/components/ui";
@@ -66,11 +66,8 @@ export default async function GalleryPage({
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover"
                 />
-                <div
-                  aria-hidden
-                  className="absolute inset-0 bg-linear-to-t from-ink via-ink/20 to-transparent"
-                />
-                <p className="absolute inset-x-4 bottom-4 font-display text-sm font-bold uppercase tracking-wider text-cream">
+                <div aria-hidden className="photo-scrim absolute inset-0" />
+                <p className="on-photo absolute inset-x-4 bottom-4 font-display text-sm font-bold uppercase tracking-wider">
                   {t(service.name, locale)}
                 </p>
               </li>

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/components/link";
 import { ButtonLink, Card, Section, SectionHead } from "@/components/ui";
 import { Faq } from "@/components/faq";
 import { Reviews } from "@/components/reviews";
@@ -92,17 +92,14 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
                 sizes="(max-width: 1024px) 100vw, 44vw"
                 className="object-cover"
               />
-              <div
-                aria-hidden
-                className="absolute inset-0 bg-linear-to-t from-ink/80 via-transparent to-transparent"
-              />
-              <div className="absolute inset-x-4 bottom-4 rounded-md border border-gold-deep bg-ink/80 px-4 py-3 backdrop-blur-sm">
-                <p className="font-display text-xs font-bold uppercase tracking-wider text-gold">
+              <div aria-hidden className="photo-scrim absolute inset-0" />
+              <div className="absolute inset-x-4 bottom-4 rounded-md border border-gold-deep bg-black/55 px-4 py-3 backdrop-blur-sm">
+                <p className="font-display text-xs font-bold uppercase tracking-wider text-gold-bright">
                   {locale === "ar"
                     ? "الاستوديو · رأس الخور"
                     : "Our unit · Ras Al Khor"}
                 </p>
-                <p className="mt-0.5 text-xs text-muted">
+                <p className="mt-0.5 text-xs text-white/70">
                   {locale === "ar"
                     ? "مستودع رقم ٩، المنطقة الصناعية ٣"
                     : "Warehouse 09, Industrial Area 3"}
@@ -236,11 +233,8 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div
-                    aria-hidden
-                    className="absolute inset-0 bg-linear-to-t from-ink via-ink/25 to-transparent"
-                  />
-                  <p className="absolute inset-x-4 bottom-4 font-display text-sm font-bold uppercase tracking-wider text-cream">
+                  <div aria-hidden className="photo-scrim absolute inset-0" />
+                  <p className="on-photo absolute inset-x-4 bottom-4 font-display text-sm font-bold uppercase tracking-wider">
                     {t(service.name, locale)}
                   </p>
                 </Link>

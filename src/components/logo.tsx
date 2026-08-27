@@ -1,19 +1,33 @@
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/components/link";
 import { business } from "@/lib/content/business";
 import { href, type Locale } from "@/lib/i18n";
 
 /**
- * Two crops of the client's badge, both cut from the supplied artwork with the
- * black background alphaed out so they sit on any surface.
+ * Two crops of the client's badge in two finishes.
  *
- * `wordmark` is the header lockup — at 40px tall the car and crown would be
- * illegible, so that variant keeps only the type. `full` adds the crown, arc
- * and silhouette and is used where there's room for it.
+ * `wordmark` is the type only; `full` adds the crown, arc and car silhouette.
+ * Each exists in a chrome version for the dark theme and a dark-ink version
+ * for the light one — the chrome artwork is built from near-whites and simply
+ * disappears on a light page.
+ *
+ * Both are rendered and toggled with CSS rather than picked in JS: the theme
+ * is decided by an inline script before React runs, so a JS choice would
+ * either flash the wrong mark or force this to be a client component.
  */
 const variants = {
-  wordmark: { src: "/brand/logo-wordmark.png", width: 640, height: 179 },
-  full: { src: "/brand/logo-lockup.png", width: 720, height: 450 },
+  wordmark: {
+    dark: "/brand/logo-wordmark.png",
+    light: "/brand/logo-wordmark-light.png",
+    width: 640,
+    height: 179,
+  },
+  full: {
+    dark: "/brand/logo-lockup.png",
+    light: "/brand/logo-lockup-light.png",
+    width: 720,
+    height: 456,
+  },
 };
 
 export function Logo({
@@ -21,7 +35,6 @@ export function Logo({
   variant = "wordmark",
   className = "",
   priority = false,
-  /** Rendered width, so the optimiser stops serving a 1920px source. */
   sizes = "180px",
 }: {
   locale: Locale;
@@ -39,13 +52,23 @@ export function Logo({
       aria-label={`${business.legalName} — home`}
     >
       <Image
-        src={art.src}
+        src={art.dark}
         alt={business.legalName}
         width={art.width}
         height={art.height}
         priority={priority}
         sizes={sizes}
-        className="h-full w-auto"
+        className="h-full w-auto light:hidden"
+      />
+      <Image
+        src={art.light}
+        alt=""
+        aria-hidden
+        width={art.width}
+        height={art.height}
+        priority={priority}
+        sizes={sizes}
+        className="hidden h-full w-auto light:block"
       />
     </Link>
   );

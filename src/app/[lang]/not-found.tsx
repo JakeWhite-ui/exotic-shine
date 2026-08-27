@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/components/link";
 import { ButtonLink } from "@/components/ui";
 import { pillars } from "@/lib/content/services";
 

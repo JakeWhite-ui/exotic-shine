@@ -1,7 +1,8 @@
-import Link from "next/link";
+import { Link } from "@/components/link";
 import { Logo } from "@/components/logo";
 import { MobileNav } from "@/components/mobile-nav";
 import { LangSwitch } from "@/components/lang-switch";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { mainNav } from "@/components/nav-links";
 import {
   ClockIcon,
@@ -81,6 +82,7 @@ export function Header({ locale }: { locale: Locale }) {
         </nav>
 
         <div className="flex items-center gap-2">
+          <ThemeToggle locale={locale} />
           <LangSwitch locale={locale} />
 
           <a

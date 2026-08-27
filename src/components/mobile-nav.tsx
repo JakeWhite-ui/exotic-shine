@@ -1,11 +1,12 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/components/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { mobileNavItems } from "@/components/nav-links";
 import { LangSwitch } from "@/components/lang-switch";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { MailIcon, PhoneIcon, WhatsAppIcon } from "@/components/icons";
 import { business } from "@/lib/content/business";
 import { ui } from "@/lib/content/ui";
@@ -53,7 +54,10 @@ export function MobileNav({ locale }: { locale: Locale }) {
         ? createPortal(
         <div className="fixed inset-0 z-50 flex flex-col bg-ink">
           <div className="flex items-center justify-between border-b border-line px-5 py-4">
-            <LangSwitch locale={locale} />
+            <div className="flex items-center gap-2">
+              <ThemeToggle locale={locale} />
+              <LangSwitch locale={locale} />
+            </div>
             <button
               type="button"
               onClick={() => setOpen(false)}

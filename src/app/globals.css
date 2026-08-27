@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+/*
+ * `light:` variant, for the handful of places where flipping a variable isn't
+ * enough — mainly the logo, which needs a different image file rather than a
+ * different colour.
+ */
+@custom-variant light (&:where(html.light, html.light *));
+
 @theme {
   --color-ink: #060607;
   --color-ink-raised: #0d0d10;
@@ -25,6 +32,41 @@
 
   --tracking-wider: 0.08em;
   --tracking-widest: 0.18em;
+}
+
+/**
+ * Light theme.
+ *
+ * Every colour utility on the site resolves through these variables, so
+ * redefining them here flips the whole site without touching a component.
+ *
+ * Two things needed real thought rather than inversion:
+ *
+ * - Gold. #d4af37 as *text* on a light page is about 1.9:1 — unreadable. The
+ *   golds all go deeper here so `text-gold` stays legible. Gold fills darken
+ *   with it, which on a light page reads as brass rather than losing the
+ *   brand.
+ * - The chrome gradient, which is built from near-whites and vanishes on
+ *   light. It's re-cut from darks below.
+ */
+html.light {
+  --color-ink: #f7f6f3;
+  --color-ink-raised: #efedE7;
+  --color-ink-card: #ffffff;
+  --color-line: #ddd9d0;
+  --color-line-soft: #e8e5dd;
+
+  --color-gold: #8c6d16;
+  --color-gold-bright: #a8831c;
+  --color-gold-deep: #c9ad63;
+
+  --color-chrome: #4a4a4a;
+  --color-chrome-dim: #7a7a7a;
+
+  --color-cream: #17170f;
+  --color-muted: #5f5d56;
+
+  color-scheme: light;
 }
 
 @layer base {
@@ -94,6 +136,18 @@
   color: transparent;
 }
 
+/* Same brushed-metal read, cut from darks so it survives a light page. */
+html.light .text-metal {
+  background-image: linear-gradient(
+    177deg,
+    #4c4c4c 4%,
+    #1c1c1c 26%,
+    #5a5a5a 52%,
+    #171717 74%,
+    #4a4a4a 96%
+  );
+}
+
 /**
  * Compact bordered control used for the language toggle and the icon links
  * beside it — same footprint whether it holds two characters or an icon.
@@ -129,6 +183,27 @@
   }
 }
 
+/**
+ * Scrim for captions sitting on a photograph.
+ *
+ * Deliberately fixed rather than themed. Photos carry their own darkness, so
+ * a white fade over one on the light theme looks washed out and the caption
+ * loses its footing. Dark scrim plus light text reads correctly against any
+ * image, in either theme.
+ */
+@utility photo-scrim {
+  background-image: linear-gradient(
+    to top,
+    rgb(6 6 7 / 0.82) 0%,
+    rgb(6 6 7 / 0.3) 38%,
+    transparent 72%
+  );
+}
+
+@utility on-photo {
+  color: #f6f3ec;
+}
+
 @utility rule-gold {
   background-image: linear-gradient(
     to right,
@@ -156,7 +231,19 @@
   display: flex;
   width: max-content;
   animation: marquee-drift var(--marquee-duration, 70s) linear infinite;
-  animation-direction: var(--marquee-direction, normal);
+  /*
+   * Promote the track to its own compositor layer. Without this the browser
+   * repaints twenty-eight cards — each with five star SVGs — on every frame,
+   * which is heavy enough to stutter on a mid-range phone. With it the layer
+   * is rasterised once and only transformed.
+   */
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.marquee-viewport {
+  /* Keeps the browser from considering the off-screen half during layout. */
+  contain: paint;
 }
 
 /* Let people stop it to actually read a card. */
