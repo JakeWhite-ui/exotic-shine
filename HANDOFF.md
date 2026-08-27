@@ -25,6 +25,31 @@ English is served from the root so URLs Google already indexed keep working.
 Arabic lives under `/ar/*`. `src/proxy.ts` rewrites root requests into
 `app/[lang]` — note Next 16 renamed `middleware` to `proxy`.
 
+## Keeping the Google rating current
+
+`src/lib/content/google-rating.json` holds the rating and review count shown
+on the homepage. A daily job (`.github/workflows/refresh-reviews.yml`) pulls
+fresh numbers from the Places API and commits them only when they move, which
+triggers the usual deploy.
+
+It stays dormant until two repository secrets exist — Settings → Secrets and
+variables → Actions:
+
+| Secret | Notes |
+| --- | --- |
+| `GOOGLE_PLACES_API_KEY` | Google Cloud project with **Places API (New)** enabled |
+| `GOOGLE_PLACE_ID` | Optional; the script finds the place by name without it |
+
+One check a day is roughly 30 requests a month, inside the free tier, though
+Google still wants a card on the account. Until then, edit the JSON by hand
+and push — that works fine.
+
+**Review text is not automated, on purpose.** The Places API returns at most
+five reviews and won't let you pick which. Automating them would replace the
+fourteen curated quotes in `reviews.ts` — several from motor trade businesses,
+which are the most persuasive thing on the page — with whatever Google ranks
+highest that day. Add new ones to `reviews.ts` by hand.
+
 ## Still waiting on the client
 
 These are the only things standing between this and launch.
