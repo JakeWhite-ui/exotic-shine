@@ -1,4 +1,5 @@
 import type { Translated } from "@/lib/i18n";
+import googleRating from "@/lib/content/google-rating.json";
 
 /**
  * Single source of truth for NAP data. It feeds the header, footer, contact
@@ -48,15 +49,19 @@ export const business = {
     plusCode: "7HQQ59JJ+7G",
   },
   /**
-   * Live Google Business Profile: 5.0 from 16 reviews, owner replies to each
-   * one. Ask Abdul for the canonical share link — this search URL resolves to
-   * the profile but a place-id link would be sturdier.
+   * The rating and count come from google-rating.json, which a scheduled job
+   * refreshes from the Places API — see scripts/fetch-google-rating.mjs. Don't
+   * hand-edit those two numbers here; they'll be overwritten.
+   *
+   * Review text stays curated in reviews.ts. The API caps at five reviews and
+   * won't say which five, so automating the quotes would trade fourteen
+   * hand-picked ones for whatever Google surfaces that day.
    */
   google: {
     profile:
       "https://www.google.com/maps/search/?api=1&query=Exotic+Shine+Motor+Services+Ras+Al+Khor+Dubai",
-    rating: 5.0,
-    reviewCount: 16,
+    rating: googleRating.rating,
+    reviewCount: googleRating.reviewCount,
   },
   /** Confirmed by the client 26 Aug — the Facebook and YouTube links both moved. */
   social: {

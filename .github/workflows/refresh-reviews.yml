@@ -1,0 +1,49 @@
+name: Refresh Google rating
+
+# Pulls the current rating and review count from the Places API once a day.
+# If they've changed it commits the new numbers, and that commit triggers the
+# usual Pages deploy. If nothing changed there's no commit and no deploy.
+#
+# Needs two repository secrets:
+#   GOOGLE_PLACES_API_KEY  — from a Google Cloud project with Places API (New)
+#   GOOGLE_PLACE_ID        — optional, looked up by name when absent
+#
+# Without the key the job exits quietly, so the workflow can sit here until
+# the client sorts out Google Cloud.
+on:
+  schedule:
+    - cron: "0 4 * * *" # 08:00 Dubai
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Fetch rating
+        env:
+          GOOGLE_PLACES_API_KEY: ${{ secrets.GOOGLE_PLACES_API_KEY }}
+          GOOGLE_PLACE_ID: ${{ secrets.GOOGLE_PLACE_ID }}
+        run: node scripts/fetch-google-rating.mjs
+
+      - name: Commit if the numbers moved
+        run: |
+          if git diff --quiet -- src/lib/content/google-rating.json; then
+            echo "No change."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/lib/content/google-rating.json
+          git commit -m "Refresh Google rating
+
+          Automated by .github/workflows/refresh-reviews.yml."
+          git push
