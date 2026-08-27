@@ -8,8 +8,11 @@ import { t, type Locale } from "@/lib/i18n";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
+// `bg-ink-card` rather than `bg-ink`: on the light theme the page background
+// and the field background would otherwise be the same colour, leaving the
+// inputs invisible apart from a hairline border.
 const fieldClass =
-  "w-full rounded-sm border border-line bg-ink px-4 py-3 text-cream placeholder:text-muted/60 focus:border-gold focus:outline-none";
+  "w-full rounded-md border border-line bg-ink-card px-4 py-3 text-cream placeholder:text-muted/60 focus:border-gold focus:outline-none";
 
 const labelClass =
   "block font-display text-xs font-semibold uppercase tracking-wider text-muted";
