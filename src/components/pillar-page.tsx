@@ -4,16 +4,22 @@ import { Link } from "@/components/link";
 import { notFound } from "next/navigation";
 import { ButtonLink, Eyebrow, Section } from "@/components/ui";
 import { BreadcrumbSchema } from "@/components/schema";
-import { imageFor } from "@/lib/content/media";
 import { getPillar, servicesInPillar, type PillarId } from "@/lib/content/services";
 import { ui } from "@/lib/content/ui";
 import { href, isLocale, t, type Locale } from "@/lib/i18n";
 
-/** One representative shot per pillar, dimmed behind the heading. */
+/**
+ * Real photographs of the unit, dimmed behind each heading — they replaced
+ * the branded marketing renders. A wide architectural shot also survives
+ * being dropped to 25% opacity behind text far better than a close-up does.
+ *
+ * Protect gets the dust-sealed bay because that's the argument the section
+ * makes: paint work needs a clean room, and here is the clean room.
+ */
 const pillarHeroes: Record<PillarId, string> = {
-  protect: "paint-protection-film",
-  enhance: "paint-correction",
-  elevate: "car-wrapping",
+  protect: "/studio/bay-sealed.webp",
+  enhance: "/studio/bay-empty.webp",
+  elevate: "/studio/hall-open.webp",
 };
 
 const metaDescriptions: Record<PillarId, string> = {
@@ -56,7 +62,7 @@ export async function PillarPage({
       <section className="relative border-b border-line bg-ink-raised">
         <div className="absolute inset-0">
           <Image
-            src={imageFor(pillarHeroes[id])}
+            src={pillarHeroes[id]}
             alt=""
             fill
             priority

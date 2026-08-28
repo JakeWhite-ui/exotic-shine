@@ -8,7 +8,10 @@
  * thing that will actually sell work. Those go in `gallery.ts`.
  */
 export const workImages: Record<string, string> = {
-  "paint-protection-film": "/work/paint-protection-film.webp",
+  // Real photo of the film rack, with UltraGuard PPF boxes legible on the
+  // shelf — it replaced the branded render and doubles as evidence for the
+  // brands the client says they stock.
+  "paint-protection-film": "/studio/film-rolls.webp",
   "ceramic-coating": "/work/ceramic-coating.webp",
   "window-tinting": "/work/window-tinting.webp",
   "car-wrapping": "/work/car-wrapping.webp",

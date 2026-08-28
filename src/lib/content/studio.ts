@@ -81,11 +81,40 @@ export const studioGallery: StudioShot[] = [
     },
   },
   {
+    src: "/studio/bay-sealed.webp",
+    alt: {
+      en: "A dust-sealed bay behind strip curtains, under the Exotic Shine sign",
+      ar: "منطقة عمل معزولة عن الغبار خلف ستائر شرائحية، تحت لوحة إكزوتك شاين",
+    },
+  },
+  {
     src: "/studio/bay-landcruiser.webp",
     portrait: true,
     alt: {
       en: "A white Land Cruiser in the workshop",
       ar: "لاند كروزر بيضاء داخل الورشة",
+    },
+  },
+  {
+    src: "/studio/hall-open.webp",
+    alt: {
+      en: "The workshop floor with the roller door open to the street",
+      ar: "أرضية الورشة والباب المتحرك مفتوح على الشارع",
+    },
+  },
+  {
+    src: "/studio/film-rolls.webp",
+    portrait: true,
+    alt: {
+      en: "The film rack with paint protection film and tint rolls in stock",
+      ar: "رف الأفلام مع لفات فيلم حماية الطلاء والتظليل",
+    },
+  },
+  {
+    src: "/studio/tool-wall.webp",
+    alt: {
+      en: "The equipment wall with tools and machine polishers",
+      ar: "جدار المعدات مع الأدوات وآلات التلميع",
     },
   },
   {
