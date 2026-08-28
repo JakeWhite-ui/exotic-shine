@@ -38,10 +38,44 @@ export const entranceShot: StudioShot = {
 };
 
 /**
- * Ordered strongest first — the homepage shows only the first three, so the
- * lead shots have to carry the point on their own: a car being worked on, the
- * floor it's standing on, and the counter you walk up to.
+ * The three on the homepage, under "Where you'll be leaving your car".
+ *
+ * Chosen against that copy rather than by gallery order: a car actually
+ * standing in the space, the lit hall, and the marble floor. The retail
+ * counter used to sit here and had nothing to do with leaving a car
+ * anywhere.
+ *
+ * Kept separate from `studioGallery` so reordering the about-page tour can't
+ * quietly change what the homepage argues.
  */
+export const studioStrip: StudioShot[] = [
+  {
+    src: "/studio/bay-mercedes-front.webp",
+    portrait: true,
+    alt: {
+      en: "A Mercedes CLA on the marble floor in front of the Exotic Shine wall",
+      ar: "مرسيدس CLA على الأرضية الرخامية أمام جدار إكزوتك شاين",
+    },
+  },
+  {
+    src: "/studio/bay-lit.webp",
+    portrait: true,
+    alt: {
+      en: "The lit hall under the mezzanine, with the Exotic Shine sign",
+      ar: "الصالة المضاءة تحت الميزانين، مع لوحة إكزوتك شاين",
+    },
+  },
+  {
+    src: "/studio/bay-empty.webp",
+    portrait: true,
+    alt: {
+      en: "A prepared bay, marble floor reflecting the ceiling lights",
+      ar: "منطقة عمل مجهزة، والأرضية الرخامية تعكس أضواء السقف",
+    },
+  },
+];
+
+/** The fuller tour on the about page. */
 export const studioGallery: StudioShot[] = [
   {
     src: "/studio/polishing.webp",

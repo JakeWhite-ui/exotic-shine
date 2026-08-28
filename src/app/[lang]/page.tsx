@@ -14,7 +14,7 @@ import {
 } from "@/lib/content/business";
 import { generalFaqs } from "@/lib/content/faqs";
 import { featuredWork, imageFor } from "@/lib/content/media";
-import { studioGallery, studioHero } from "@/lib/content/studio";
+import { studioHero, studioStrip } from "@/lib/content/studio";
 import { getService, pillars, servicesInPillar } from "@/lib/content/services";
 import { ui } from "@/lib/content/ui";
 import { href, isLocale, t } from "@/lib/i18n";
@@ -260,7 +260,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
         />
 
         <ul className="mt-10 grid gap-4 sm:grid-cols-3">
-          {studioGallery.slice(0, 3).map((shot) => (
+          {studioStrip.map((shot) => (
             <li
               key={shot.src}
               className="relative aspect-3/4 overflow-hidden rounded-lg border border-line-soft"
