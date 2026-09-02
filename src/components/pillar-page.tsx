@@ -4,7 +4,12 @@ import { Link } from "@/components/link";
 import { notFound } from "next/navigation";
 import { ButtonLink, Eyebrow, Section } from "@/components/ui";
 import { BreadcrumbSchema } from "@/components/schema";
-import { getPillar, servicesInPillar, type PillarId } from "@/lib/content/services";
+import {
+  getPillar,
+  quoteHref,
+  servicesInPillar,
+  type PillarId,
+} from "@/lib/content/services";
 import { ui } from "@/lib/content/ui";
 import { href, isLocale, t, type Locale } from "@/lib/i18n";
 
@@ -125,14 +130,28 @@ export async function PillarPage({
                 <p className="mt-3 max-w-2xl leading-relaxed text-muted">
                   {t(service.short, locale)}
                 </p>
-                {service.deep ? (
-                  <Link
-                    href={href(locale, `/service/${service.slug}`)}
-                    className="mt-4 inline-block font-display text-xs font-bold uppercase tracking-wider text-gold transition-colors hover:text-gold-bright"
+                {/*
+                  Every service gets its own quote link, arriving at the form
+                  with this service already picked. Before this, someone eight
+                  services down the page had to scroll back to the top to act.
+                */}
+                <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3">
+                  <ButtonLink
+                    href={quoteHref(locale, service.slug)}
+                    variant="outline"
+                    className="px-5 py-2.5 text-xs"
                   >
-                    {t(ui.cta.learnMore, locale)} →
-                  </Link>
-                ) : null}
+                    {t(ui.cta.quoteShort, locale)}
+                  </ButtonLink>
+                  {service.deep ? (
+                    <Link
+                      href={href(locale, `/service/${service.slug}`)}
+                      className="font-display text-xs font-bold uppercase tracking-wider text-gold transition-colors hover:text-gold-bright"
+                    >
+                      {t(ui.cta.learnMore, locale)} →
+                    </Link>
+                  ) : null}
+                </div>
               </div>
             </article>
           ))}

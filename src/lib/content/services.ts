@@ -1,4 +1,4 @@
-import type { Translated } from "@/lib/i18n";
+import { href, type Locale, type Translated } from "@/lib/i18n";
 
 export type PillarId = "protect" | "enhance" | "elevate";
 
@@ -329,4 +329,20 @@ export function getService(slug: string) {
 
 export function getPillar(id: PillarId) {
   return pillars.find((pillar) => pillar.id === id)!;
+}
+
+/**
+ * Contact link that arrives with the service already selected.
+ *
+ * Every service on the site now carries one of these, which was the client's
+ * ask on 1 September. The slug travels in the query rather than the service
+ * name because the names contain spaces, ampersands and brackets — and because
+ * a slug survives the copy being reworded, in either language.
+ *
+ * `LeadForm` reads it back; an unknown slug just leaves the picker on its
+ * placeholder, so a stale bookmark degrades to the plain contact page.
+ */
+export function quoteHref(locale: Locale, slug?: string) {
+  const contact = href(locale, "/contact");
+  return slug ? `${contact}/?service=${slug}` : contact;
 }

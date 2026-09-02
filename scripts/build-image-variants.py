@@ -6,6 +6,14 @@ loader at them (see image-loader.ts) — that keeps real srcset behaviour, so a
 phone still downloads a 640px file rather than the full-size original.
 
 Run after adding or replacing anything in public/work or public/studio.
+
+Note that build-media.py writes its own ladder for everything it produces, so
+the service stills in public/work don't need a pass through here — this script
+is for photographs that arrive as files rather than as frames of a video.
+
+Needs Pillow (`pip install pillow`), which build-media.py deliberately doesn't:
+that one shells out to cwebp so it runs on a machine with only ffmpeg and webp
+installed.
 """
 
 from pathlib import Path

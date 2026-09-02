@@ -2,11 +2,13 @@ import type { Translated } from "@/lib/i18n";
 
 /**
  * Photographs of the actual unit in Ras Al Khor, sent by the client on
- * 25 August. Unlike the branded marketing set in `media.ts`, these are real:
- * their floor, their signage, their cars, their number plates.
+ * 25 August: their floor, their signage, their cars, their number plates.
  *
- * That makes them the better choice anywhere the job is to prove the place
- * exists and looks the part — hero, about, contact.
+ * These prove the place exists and looks the part, so they carry /about, the
+ * /contact card and the strip on the homepage. What they can't show is anyone
+ * working — the unit is empty or idle in nearly all of them. That job belongs
+ * to the footage in `clips.ts`, which is why the homepage hero moved off
+ * `studioHero` and onto video.
  */
 export type StudioShot = {
   src: string;

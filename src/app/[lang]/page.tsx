@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Link } from "@/components/link";
 import { ButtonLink, Card, Section, SectionHead } from "@/components/ui";
+import { Clip } from "@/components/clip";
 import { Faq } from "@/components/faq";
 import { Reviews } from "@/components/reviews";
 import { Address } from "@/components/address";
@@ -12,9 +13,10 @@ import {
   hoursSummary,
   stats,
 } from "@/lib/content/business";
+import { clipPoster, clipVideo, heroClip, reelClips } from "@/lib/content/clips";
 import { generalFaqs } from "@/lib/content/faqs";
 import { featuredWork, imageFor } from "@/lib/content/media";
-import { studioHero, studioStrip } from "@/lib/content/studio";
+import { studioStrip } from "@/lib/content/studio";
 import { getService, pillars, servicesInPillar } from "@/lib/content/services";
 import { ui } from "@/lib/content/ui";
 import { href, isLocale, t } from "@/lib/i18n";
@@ -82,30 +84,22 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
             </ul>
           </div>
 
+          {/*
+            The hero used to be a still of the empty unit. It's the client's
+            own 4K footage now — the same shot, except the film is going on
+            while you read the heading. It's the one clip that loads on
+            arrival, which is why it's the shortest and the tightest encode.
+          */}
           <div className="relative">
-            <div className="relative aspect-4/3 overflow-hidden rounded-lg border border-line-soft">
-              <Image
-                src={studioHero.src}
-                alt={t(studioHero.alt, locale)}
-                fill
-                priority
-                sizes="(max-width: 1024px) 100vw, 44vw"
-                className="object-cover"
-              />
-              <div aria-hidden className="photo-scrim absolute inset-0" />
-              <div className="absolute inset-x-4 bottom-4 rounded-md border border-gold-deep bg-black/55 px-4 py-3 backdrop-blur-sm">
-                <p className="font-display text-xs font-bold uppercase tracking-wider text-gold-bright">
-                  {locale === "ar"
-                    ? "الاستوديو · رأس الخور"
-                    : "Our unit · Ras Al Khor"}
-                </p>
-                <p className="mt-0.5 text-xs text-white/70">
-                  {locale === "ar"
-                    ? "مستودع رقم ٩، المنطقة الصناعية ٣"
-                    : "Warehouse 09, Industrial Area 3"}
-                </p>
-              </div>
-            </div>
+            <Clip
+              src={clipVideo(heroClip)}
+              poster={clipPoster(heroClip)}
+              caption={t(heroClip.caption, locale)}
+              playLabel={t(ui.labels.playClip, locale)}
+              pauseLabel={t(ui.labels.pauseClip, locale)}
+              landscape
+              priority
+            />
           </div>
         </div>
       </section>
@@ -224,16 +218,19 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
                       ? `/service/${slug}`
                       : `/${service.pillar}#${slug}`,
                   )}
-                  className="group relative block aspect-4/3 overflow-hidden rounded-lg border border-line-soft"
+                  className="group relative block aspect-4/3 overflow-hidden rounded-lg border border-line-soft transition-colors duration-300 hover:border-gold-deep"
                 >
                   <Image
                     src={imageFor(slug)}
                     alt={t(service.name, locale)}
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="photo-zoom object-cover"
                   />
-                  <div aria-hidden className="photo-scrim absolute inset-0" />
+                  <div
+                    aria-hidden
+                    className="photo-scrim scrim-fade absolute inset-0"
+                  />
                   <p className="on-photo absolute inset-x-4 bottom-4 font-display text-sm font-bold uppercase tracking-wider">
                     {t(service.name, locale)}
                   </p>
@@ -241,6 +238,41 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
               </li>
             );
           })}
+        </ul>
+      </Section>
+
+      {/*
+        Four of the eight clips from the work page. The grid above navigates,
+        this proves — a visitor who won't read a service page will still watch
+        ten seconds of film going onto a bonnet.
+      */}
+      <Section className="border-t border-line-soft">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <SectionHead
+            eyebrow={t(ui.sections.clipsEyebrow, locale)}
+            title={t(ui.sections.clipsTitle, locale)}
+          />
+          <Link
+            href={href(locale, "/gallery")}
+            className="font-display text-xs font-bold uppercase tracking-wider text-gold hover:text-gold-bright"
+          >
+            {locale === "ar" ? "كل المقاطع" : "All clips"} →
+          </Link>
+        </div>
+
+        <ul className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-5">
+          {reelClips.slice(0, 4).map((clip) => (
+            <li key={clip.id}>
+              <Clip
+                src={clipVideo(clip)}
+                poster={clipPoster(clip)}
+                caption={t(clip.caption, locale)}
+                playLabel={t(ui.labels.playClip, locale)}
+                pauseLabel={t(ui.labels.pauseClip, locale)}
+                hideCaption
+              />
+            </li>
+          ))}
         </ul>
       </Section>
 
@@ -263,14 +295,14 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
           {studioStrip.map((shot) => (
             <li
               key={shot.src}
-              className="relative aspect-3/4 overflow-hidden rounded-lg border border-line-soft"
+              className="group relative aspect-3/4 overflow-hidden rounded-lg border border-line-soft transition-colors duration-300 hover:border-gold-deep"
             >
               <Image
                 src={shot.src}
                 alt={t(shot.alt, locale)}
                 fill
                 sizes="(max-width: 640px) 100vw, 32vw"
-                className="object-cover"
+                className="photo-zoom object-cover"
               />
             </li>
           ))}

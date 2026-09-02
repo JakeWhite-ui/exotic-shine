@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build && node scripts/flatten-export.mjs",
     "preview": "npx --yes serve out -l 4830",
-    "images": "python3 scripts/build-image-variants.py"
+    "images": "python3 scripts/build-image-variants.py",
+    "media": "python3 scripts/build-media.py"
   },
   "dependencies": {
     "next": "16.3.2",

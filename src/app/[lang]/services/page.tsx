@@ -4,7 +4,7 @@ import { Link } from "@/components/link";
 import { notFound } from "next/navigation";
 import { Eyebrow, Section } from "@/components/ui";
 import { imageFor } from "@/lib/content/media";
-import { pillars, servicesInPillar } from "@/lib/content/services";
+import { pillars, quoteHref, servicesInPillar } from "@/lib/content/services";
 import { ui } from "@/lib/content/ui";
 import { href, isLocale, t, type Locale } from "@/lib/i18n";
 
@@ -62,31 +62,41 @@ export default async function ServicesPage({
 
           <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {servicesInPillar(pillar.id).map((service) => (
-              <li key={service.slug}>
-                <Link
-                  href={href(
-                    locale,
-                    service.deep
-                      ? `/service/${service.slug}`
-                      : `/${pillar.id}#${service.slug}`,
-                  )}
-                  className="group flex h-full flex-col overflow-hidden rounded-lg border border-line-soft bg-ink-card transition-colors hover:border-gold-deep"
-                >
-                  {imageFor(service.slug) ? (
-                    <div className="relative aspect-16/9 overflow-hidden">
-                      <Image
-                        src={imageFor(service.slug)}
-                        alt=""
-                        fill
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                    </div>
-                  ) : null}
-                  <div className="flex flex-1 flex-col p-5">
+              <li
+                key={service.slug}
+                className="group relative flex flex-col overflow-hidden rounded-lg border border-line-soft bg-ink-card transition-colors hover:border-gold-deep"
+              >
+                {imageFor(service.slug) ? (
+                  <div className="relative aspect-16/9 overflow-hidden">
+                    <Image
+                      src={imageFor(service.slug)}
+                      alt=""
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="photo-zoom object-cover"
+                    />
+                  </div>
+                ) : null}
+                <div className="flex flex-1 flex-col p-5">
                   <div className="flex items-start justify-between gap-3">
                     <h3 className="text-base leading-snug">
-                      {t(service.name, locale)}
+                      {/*
+                        The card is no longer a single link — a quote button
+                        inside one would be invalid markup. This pseudo-element
+                        keeps the whole tile clickable while leaving the button
+                        below its own hit area.
+                      */}
+                      <Link
+                        href={href(
+                          locale,
+                          service.deep
+                            ? `/service/${service.slug}`
+                            : `/${pillar.id}#${service.slug}`,
+                        )}
+                        className="after:absolute after:inset-0 hover:text-gold"
+                      >
+                        {t(service.name, locale)}
+                      </Link>
                     </h3>
                     {service.comingSoon ? (
                       <span className="shrink-0 rounded-full border border-gold-deep px-2 py-0.5 font-display text-[0.625rem] font-semibold uppercase tracking-wider text-gold">
@@ -97,8 +107,13 @@ export default async function ServicesPage({
                   <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted">
                     {t(service.short, locale)}
                   </p>
-                  </div>
-                </Link>
+                  <Link
+                    href={quoteHref(locale, service.slug)}
+                    className="relative z-10 mt-auto self-start pt-4 font-display text-xs font-bold uppercase tracking-wider text-gold transition-colors hover:text-gold-bright"
+                  >
+                    {t(ui.cta.quoteShort, locale)} →
+                  </Link>
+                </div>
               </li>
             ))}
           </ul>

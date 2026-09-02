@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { business } from "@/lib/content/business";
-import { pillars, servicesInPillar } from "@/lib/content/services";
+import { getService, pillars, servicesInPillar } from "@/lib/content/services";
 import { ui } from "@/lib/content/ui";
 import { t, type Locale } from "@/lib/i18n";
 
@@ -25,6 +25,21 @@ export function LeadForm({
   presetService?: string;
 }) {
   const [status, setStatus] = useState<Status>("idle");
+  const [service, setService] = useState(presetService ?? "");
+
+  /**
+   * Pick up `?service=<slug>` from the quote links on the service cards.
+   *
+   * Read off `window.location` rather than `useSearchParams`, which on a
+   * static export prerenders empty and drags a Suspense boundary in with it.
+   * An unknown slug is ignored, so the picker falls back to its placeholder.
+   */
+  useEffect(() => {
+    if (presetService) return;
+    const slug = new URLSearchParams(window.location.search).get("service");
+    const match = slug ? getService(slug) : undefined;
+    if (match) setService(match.name.en);
+  }, [presetService]);
 
   /**
    * The site is a static export on GitHub Pages, so there's no server to post
@@ -73,6 +88,9 @@ export function LeadForm({
 
       if (!response.ok) throw new Error(String(response.status));
       form.reset();
+      // `reset()` doesn't reach a controlled field, so "send another enquiry"
+      // would otherwise come back with the previous service still picked.
+      setService(presetService ?? "");
       setStatus("sent");
     } catch {
       setStatus("error");
@@ -162,7 +180,8 @@ export function LeadForm({
         <select
           id="lead-service"
           name="service"
-          defaultValue={presetService ?? ""}
+          value={service}
+          onChange={(event) => setService(event.target.value)}
           className={`${fieldClass} mt-2`}
         >
           <option value="">{t(ui.form.servicePlaceholder, locale)}</option>

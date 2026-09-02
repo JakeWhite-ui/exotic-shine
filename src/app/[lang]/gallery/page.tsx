@@ -1,19 +1,24 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { Link } from "@/components/link";
 import { notFound } from "next/navigation";
 import { BeforeAfter } from "@/components/before-after";
+import { Clip } from "@/components/clip";
 import { ButtonLink, Eyebrow, Section, SectionHead } from "@/components/ui";
+import { clipPoster, clipVideo, reelClips } from "@/lib/content/clips";
 import { gallery, isPublishable } from "@/lib/content/gallery";
-import { featuredWork, imageFor } from "@/lib/content/media";
-import { getService, pillars, servicesInPillar } from "@/lib/content/services";
+import {
+  getService,
+  pillars,
+  quoteHref,
+  servicesInPillar,
+} from "@/lib/content/services";
 import { ui } from "@/lib/content/ui";
 import { href, isLocale, t, type Locale } from "@/lib/i18n";
 
 export const metadata: Metadata = {
-  title: "Our work — before and after",
+  title: "Our work — video from the studio floor",
   description:
-    "Real before-and-after results from our Dubai studio: paint protection film, ceramic coating, paint correction, wraps and interior detailing.",
+    "Real footage from our Dubai studio: paint protection film going on, colour change wraps, machine polishing, wheels and interiors.",
   alternates: {
     canonical: "/gallery",
     languages: { en: "/gallery", ar: "/ar/gallery" },
@@ -39,37 +44,45 @@ export default async function GalleryPage({
           </h1>
           <p className="mt-5 max-w-2xl leading-relaxed text-muted">
             {locale === "ar"
-              ? "ما نقوم به داخل الاستوديو، وقائمة الخدمات الأربع والعشرين كاملة."
-              : "What we do inside the unit, and the full list of all twenty-four services."}
+              ? "مقاطع من داخل الورشة، وقائمة الخدمات الأربع والعشرين كاملة."
+              : "Clips from the floor of the unit, and the full list of all twenty-four services."}
           </p>
         </div>
       </section>
 
+      {/*
+        The reel wall — the section this page now leads on. The client pointed
+        at thevelondubai.com, which sells through an embedded Instagram grid;
+        this makes the same argument without handing the page weight and the
+        visitor tracking to Meta. See src/components/clip.tsx for how little of
+        it actually downloads.
+      */}
       <Section className="border-b border-line-soft">
         <SectionHead
-          eyebrow={locale === "ar" ? "الخدمات" : "The work"}
-          title={locale === "ar" ? "ما نقوم به" : "What we do, in the unit"}
+          eyebrow={t(ui.sections.clipsEyebrow, locale)}
+          title={t(ui.sections.clipsTitle, locale)}
+          lede={t(ui.sections.clipsLede, locale)}
         />
-        <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {featuredWork.map((slug) => {
-            const service = getService(slug);
-            if (!service) return null;
+        <ul className="mt-12 grid gap-x-5 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+          {reelClips.map((clip) => {
+            const service = getService(clip.serviceSlug);
             return (
-              <li
-                key={slug}
-                className="relative aspect-4/3 overflow-hidden rounded-lg border border-line-soft"
-              >
-                <Image
-                  src={imageFor(slug)}
-                  alt={t(service.name, locale)}
-                  fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover"
+              <li key={clip.id}>
+                <Clip
+                  src={clipVideo(clip)}
+                  poster={clipPoster(clip)}
+                  caption={t(clip.caption, locale)}
+                  playLabel={t(ui.labels.playClip, locale)}
+                  pauseLabel={t(ui.labels.pauseClip, locale)}
                 />
-                <div aria-hidden className="photo-scrim absolute inset-0" />
-                <p className="on-photo absolute inset-x-4 bottom-4 font-display text-sm font-bold uppercase tracking-wider">
-                  {t(service.name, locale)}
-                </p>
+                {service ? (
+                  <Link
+                    href={quoteHref(locale, service.slug)}
+                    className="mt-3 inline-block font-display text-xs font-bold uppercase tracking-wider text-gold transition-colors hover:text-gold-bright"
+                  >
+                    {t(ui.cta.quoteShort, locale)} →
+                  </Link>
+                ) : null}
               </li>
             );
           })}
@@ -83,7 +96,7 @@ export default async function GalleryPage({
         `src/lib/content/gallery.ts` and it comes back automatically.
       */}
       {publishable.length > 0 ? (
-        <Section>
+        <Section className="border-b border-line-soft">
           <SectionHead
             eyebrow={t(ui.sections.workEyebrow, locale)}
             title={t(ui.sections.workTitle, locale)}
@@ -109,7 +122,7 @@ export default async function GalleryPage({
         </Section>
       ) : null}
 
-      <Section className="border-t border-line-soft">
+      <Section>
         <SectionHead
           eyebrow={t(ui.nav.services, locale)}
           title={
@@ -117,17 +130,25 @@ export default async function GalleryPage({
               ? "الخدمات الأربع والعشرون كاملة"
               : "All twenty-four services"
           }
+          lede={
+            locale === "ar"
+              ? "لكل خدمة رابط لطلب عرض سعر يصلنا وقد اخترتها مسبقًا."
+              : "Every one of them has its own quote link — it reaches us with the service already filled in."
+          }
         />
 
-        <div className="mt-10 grid gap-10 lg:grid-cols-3">
+        <div className="mt-10 grid gap-x-10 gap-y-12 lg:grid-cols-3">
           {pillars.map((pillar) => (
             <div key={pillar.id}>
               <h3 className="font-display text-sm font-bold uppercase tracking-widest text-gold">
                 {t(pillar.name, locale)}
               </h3>
-              <ul className="mt-4 space-y-2.5">
+              <ul className="mt-4">
                 {servicesInPillar(pillar.id).map((service) => (
-                  <li key={service.slug}>
+                  <li
+                    key={service.slug}
+                    className="flex items-baseline justify-between gap-4 border-b border-line-soft py-2.5"
+                  >
                     <Link
                       href={href(
                         locale,
@@ -141,6 +162,13 @@ export default async function GalleryPage({
                       {service.comingSoon
                         ? ` — ${t(ui.labels.comingSoon, locale)}`
                         : ""}
+                    </Link>
+                    <Link
+                      href={quoteHref(locale, service.slug)}
+                      aria-label={`${t(ui.cta.quoteShort, locale)} — ${t(service.name, locale)}`}
+                      className="shrink-0 font-display text-[0.625rem] font-bold uppercase tracking-wider text-gold/70 transition-colors hover:text-gold-bright"
+                    >
+                      {t(ui.cta.quoteShort, locale)}
                     </Link>
                   </li>
                 ))}

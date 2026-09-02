@@ -1,28 +1,30 @@
 /**
- * The client's own branded imagery, carried over from the old site and
- * re-encoded (10.9 MB of 6084px JPEGs became 1.2 MB of 1600px WebP).
+ * One still per service, all of them frames pulled out of the client's own
+ * footage by scripts/build-media.py.
  *
- * Note these are marketing images with the Exotic Shine badge burned into a
- * corner, not documentary shots of specific jobs — so they carry the site
- * visually, but the before/after pairs we've asked Abdul for are still the
- * thing that will actually sell work. Those go in `gallery.ts`.
+ * What was here before was a set of AI renders inherited from the old site —
+ * gold-lit studios, a mobile detailing van that doesn't exist, a flat lay of
+ * accessories nobody owns. Alli flagged them on 1 September and sent thirteen
+ * videos of the real unit instead, so every entry below is now a car that
+ * actually stood on their floor.
+ *
+ * Two services lost their picture in the swap rather than keep a fake one:
+ * mobile detailing (which is "coming soon" anyway) and off-road accessories.
+ * `imageFor` returning undefined is handled everywhere it's called.
  */
 export const workImages: Record<string, string> = {
-  // Real photo of the film rack, with UltraGuard PPF boxes legible on the
-  // shelf — it replaced the branded render and doubles as evidence for the
-  // brands the client says they stock.
-  "paint-protection-film": "/studio/film-rolls.webp",
+  "paint-protection-film": "/work/paint-protection-film.webp",
   "ceramic-coating": "/work/ceramic-coating.webp",
+  // The one frame here that isn't the job being done: there's no footage of
+  // film going onto glass, so this is a finished car with the tint visible.
   "window-tinting": "/work/window-tinting.webp",
   "car-wrapping": "/work/car-wrapping.webp",
   "paint-correction": "/work/paint-correction.webp",
   "vehicle-washing": "/work/vehicle-washing.webp",
   "alloy-rim-protection": "/work/alloy-rim-protection.webp",
-  "off-road-accessories": "/work/off-road-accessories.webp",
-  "mobile-detailing": "/work/mobile-detailing.webp",
+  "interior-detailing": "/work/interior-detailing.webp",
+  "exterior-detailing": "/work/exterior-detailing.webp",
 };
-
-export const heroImage = workImages["paint-protection-film"];
 
 export function imageFor(slug: string) {
   return workImages[slug];
@@ -37,6 +39,6 @@ export const featuredWork = [
   "window-tinting",
   "alloy-rim-protection",
   "vehicle-washing",
-  "off-road-accessories",
-  "mobile-detailing",
+  "interior-detailing",
+  "exterior-detailing",
 ];

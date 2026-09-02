@@ -24,6 +24,13 @@
 .DS_Store
 *.pem
 
+# Camera masters the client sent over WhatsApp — ~256 MB of 4K and 1080p MOV.
+# scripts/build-clips.py and scripts/build-stills.py read from here and write
+# the web-sized derivatives into public/clips and public/work, which *are*
+# committed. Keep a backup of this folder somewhere off this machine: it can't
+# be regenerated from the repo.
+/media-source/
+
 # debug
 npm-debug.log*
 yarn-debug.log*
