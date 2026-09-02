@@ -150,14 +150,14 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/about">) 
           {studioGallery.map((shot) => (
             <li
               key={shot.src}
-              className="relative aspect-3/4 overflow-hidden rounded-lg border border-line-soft"
+              className="group relative aspect-3/4 overflow-hidden rounded-lg border border-line-soft transition-colors duration-300 hover:border-gold-deep"
             >
               <Image
                 src={shot.src}
                 alt={t(shot.alt, locale)}
                 fill
                 sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 24vw"
-                className="object-cover"
+                className="photo-zoom object-cover"
               />
             </li>
           ))}
