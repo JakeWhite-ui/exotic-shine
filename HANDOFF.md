@@ -10,16 +10,26 @@ npm run build   # everything prerenders to static HTML
 
 ## Structure
 
-Three pillars taken from the client's own logo strapline, with all 24 services
-divided between them:
+Four pillars, with all 34 services divided between them:
 
 | Route | What it is |
 | --- | --- |
 | `/` | Home — video hero, pillars, clip strip, FAQ, contact |
-| `/services` | All 24, grouped by pillar |
-| `/protect` `/enhance` `/elevate` | Pillar hubs, each service as an anchored section |
+| `/services` | The full list, grouped by pillar |
+| `/protect` `/enhance` `/elevate` `/maintain` | Pillar hubs, each service an anchored section |
 | `/service/<slug>` | Five deep pages: PPF, ceramic coating, tinting, wrapping, respray |
 | `/gallery` `/pricing` `/about` `/promotions` `/contact` | Supporting pages |
+
+Three of those pillars are the client's own logo strapline — "Protect | Enhance
+| Elevate". **Maintain is not, and it widens what the site claims the business
+does**; see the note further down before touching it. Nav, sitemap and the
+homepage cards all derive from `pillars` in `services.ts`, so a pillar added
+there appears everywhere on its own — except for a route file, which has to be
+created by hand next to the other three.
+
+Counts in headline copy are deliberately gone: the pages used to say "three
+tracks" and "twenty-four services", which went stale the moment a pillar
+landed. The one number left is the stat block, and it counts `services.length`.
 
 English is served from the root so URLs Google already indexed keep working.
 Arabic lives under `/ar/*`. There's no server to rewrite with, so
@@ -147,9 +157,37 @@ number nobody can defend. Connect the Google Business Profile and pull real
 ratings instead. Same reasoning behind `verified: false` on two of the four
 stats in `business.ts` — those render as copy but stay out of the JSON-LD.
 
-**Five deep pages, not twenty-four.** Only services with real search demand in
-Dubai get their own page; the rest are sections on a pillar hub. Twenty-four
+**Five deep pages, not one per service.** Only services with real search demand
+in Dubai get their own page; the rest are sections on a pillar hub. Thirty-four
 thin pages would split ranking signals instead of concentrating them.
+
+**The Maintain pillar is a claim, not just a layout.** Added 2 September at the
+client's request, lifting ten services off grandpowertyre.com — tyres,
+alignment, rims, rim repair, battery, AC, oil, brakes, mechanical and
+auto-electrical. Two of that site's twelve were already here under different
+names (tinting, and dent and paint) and weren't duplicated.
+
+None of it is paint work, so filing it under "shield the paint before the road
+gets to it" would have been nonsense — hence a fourth track rather than a
+reshuffle. The copy names no brands and promises no warranties, because what
+they stock and what they guarantee is the client's to state and neither is
+confirmed. **If the studio doesn't actually turn a spanner, delete the pillar
+rather than reword it.** A customer who books an oil change and arrives at a
+detailing bay is a worse outcome than a shorter list.
+
+**Scroll reveal is markup, not components.** `data-reveal` on an element, or
+`data-reveal-items` on a container whose children should stagger — the grids
+stay server-rendered and no page pays for a client boundary. All of it hangs
+off a `reveal-on` class that `src/components/reveal.ts` adds before first
+paint; if the script can't finish, or the visitor asked for reduced motion, the
+class never lands and the CSS has no effect. Nothing is ever hidden by a rule
+that nothing is left alive to undo.
+
+Three edge cases it covers, each of which broke a page in testing before it
+was handled: client-side navigation (a MutationObserver picks up tiles that
+next/link brings in later), scrolling faster than the observer samples (a tile
+reported as "already above" is revealed rather than skipped), and an error on
+a later tick (its own catch, since the outer one is long gone by then).
 
 **Old service URLs are redirected, not dropped.** GitHub Pages can't do 301s,
 so `scripts/flatten-export.mjs` writes meta-refresh stubs for the retired

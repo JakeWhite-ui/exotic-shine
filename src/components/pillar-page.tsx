@@ -25,6 +25,9 @@ const pillarHeroes: Record<PillarId, string> = {
   protect: "/studio/bay-sealed.webp",
   enhance: "/studio/bay-empty.webp",
   elevate: "/studio/hall-open.webp",
+  // The tool wall: the only photograph of the unit with equipment rather than
+  // finish in it, which is the right note for the servicing side.
+  maintain: "/studio/tool-wall.webp",
 };
 
 const metaDescriptions: Record<PillarId, string> = {
@@ -34,6 +37,8 @@ const metaDescriptions: Record<PillarId, string> = {
     "Paint correction, respray, dent removal, headlight restoration and full interior and exterior detailing in Dubai.",
   elevate:
     "Colour change wraps, body kits, roof racks, off-road gear and lighting upgrades fitted properly in Dubai.",
+  maintain:
+    "Tyres, alignment and balancing, rims and rim repair, battery, AC, oil, brakes, mechanical and auto-electrical service in Ras Al Khor, Dubai.",
 };
 
 export function pillarMetadata(id: PillarId): Metadata {
@@ -105,7 +110,7 @@ export async function PillarPage({
       </section>
 
       <Section>
-        <div className="divide-y divide-line-soft">
+        <div className="divide-y divide-line-soft" data-reveal-items>
           {items.map((service, index) => (
             <article
               key={service.slug}

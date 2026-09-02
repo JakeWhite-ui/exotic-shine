@@ -56,7 +56,12 @@ export const ui = {
   },
   sections: {
     pillarsEyebrow: { en: "What we do", ar: "ما نقدمه" },
-    pillarsTitle: { en: "Three ways we work on a car", ar: "ثلاثة مسارات للعمل على سيارتك" },
+    // Count-free on purpose: this said "Three ways" until a fourth pillar
+    // arrived, and headline copy shouldn't need editing when a service does.
+    pillarsTitle: {
+      en: "Every way we work on a car",
+      ar: "كل مسارات العمل على سيارتك",
+    },
     workEyebrow: { en: "Our work", ar: "أعمالنا" },
     workTitle: { en: "Before and after", ar: "قبل وبعد" },
     clipsEyebrow: { en: "On camera", ar: "من الورشة" },

@@ -11,7 +11,7 @@ import { href, isLocale, t, type Locale } from "@/lib/i18n";
 export const metadata: Metadata = {
   title: "All services",
   description:
-    "Twenty-four car care services in Dubai — paint protection film, ceramic coating, tinting, detailing, respray, wraps, accessories and off-road fitting.",
+    "Car care and servicing in Dubai — paint protection film, ceramic coating, tinting, detailing, respray, wraps and accessories, plus tyres, alignment, AC, oil, brakes and mechanical work.",
   alternates: {
     canonical: "/services",
     languages: { en: "/services", ar: "/ar/services" },
@@ -37,8 +37,8 @@ export default async function ServicesPage({
           </h1>
           <p className="mt-5 max-w-2xl leading-relaxed text-muted">
             {locale === "ar"
-              ? "أربع وعشرون خدمة موزّعة على ثلاثة مسارات: الحماية، والتجديد، والتطوير."
-              : "Twenty-four services across three tracks — protecting what's new, restoring what isn't, and building what you want."}
+              ? "أربعة مسارات: الحماية، والتجديد، والتطوير، والصيانة."
+              : "Four tracks — protecting what's new, restoring what isn't, building what you want, and keeping all of it running."}
           </p>
         </div>
       </section>
@@ -60,7 +60,10 @@ export default async function ServicesPage({
             </Link>
           </div>
 
-          <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <ul
+            className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+            data-reveal-items
+          >
             {servicesInPillar(pillar.id).map((service) => (
               <li
                 key={service.slug}

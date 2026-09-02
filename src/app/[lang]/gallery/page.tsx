@@ -44,8 +44,8 @@ export default async function GalleryPage({
           </h1>
           <p className="mt-5 max-w-2xl leading-relaxed text-muted">
             {locale === "ar"
-              ? "مقاطع من داخل الورشة، وقائمة الخدمات الأربع والعشرين كاملة."
-              : "Clips from the floor of the unit, and the full list of all twenty-four services."}
+              ? "مقاطع من داخل الورشة، وقائمة خدماتنا كاملة."
+              : "Clips from the floor of the unit, and the full list of everything we do."}
           </p>
         </div>
       </section>
@@ -63,7 +63,10 @@ export default async function GalleryPage({
           title={t(ui.sections.clipsTitle, locale)}
           lede={t(ui.sections.clipsLede, locale)}
         />
-        <ul className="mt-12 grid gap-x-5 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+        <ul
+          className="mt-12 grid gap-x-5 gap-y-10 sm:grid-cols-2 lg:grid-cols-4"
+          data-reveal-items
+        >
           {reelClips.map((clip) => {
             const service = getService(clip.serviceSlug);
             return (
@@ -106,7 +109,7 @@ export default async function GalleryPage({
                 : "Drag the handle to compare."
             }
           />
-          <div className="mt-10 grid gap-8 sm:grid-cols-2">
+          <div className="mt-10 grid gap-8 sm:grid-cols-2" data-reveal-items>
             {publishable.map((item) => (
               <BeforeAfter
                 key={item.id}
@@ -125,11 +128,7 @@ export default async function GalleryPage({
       <Section>
         <SectionHead
           eyebrow={t(ui.nav.services, locale)}
-          title={
-            locale === "ar"
-              ? "الخدمات الأربع والعشرون كاملة"
-              : "All twenty-four services"
-          }
+          title={locale === "ar" ? "كل خدماتنا" : "Every service we offer"}
           lede={
             locale === "ar"
               ? "لكل خدمة رابط لطلب عرض سعر يصلنا وقد اخترتها مسبقًا."
@@ -137,7 +136,10 @@ export default async function GalleryPage({
           }
         />
 
-        <div className="mt-10 grid gap-x-10 gap-y-12 lg:grid-cols-3">
+        <div
+          className="mt-10 grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-4"
+          data-reveal-items
+        >
           {pillars.map((pillar) => (
             <div key={pillar.id}>
               <h3 className="font-display text-sm font-bold uppercase tracking-widest text-gold">

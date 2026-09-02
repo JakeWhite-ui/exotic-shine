@@ -1,5 +1,6 @@
 import type { Translated } from "@/lib/i18n";
 import googleRating from "@/lib/content/google-rating.json";
+import { services } from "@/lib/content/services";
 
 /**
  * Single source of truth for NAP data. It feeds the header, footer, contact
@@ -245,7 +246,9 @@ export const stats: {
     verified: true,
   },
   {
-    value: "24",
+    // Counted, not typed: this read 24 until the servicing pillar landed, and
+    // a number nobody remembers to update is worse than no number at all.
+    value: String(services.length),
     label: { en: "Services under one roof", ar: "خدمة تحت سقف واحد" },
     verified: true,
   },

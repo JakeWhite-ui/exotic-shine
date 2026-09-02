@@ -312,6 +312,53 @@ html.light .text-metal {
   }
 }
 
+/**
+ * Scroll reveal. See src/components/reveal.ts for the markup and the script.
+ *
+ * Every rule is scoped under `.reveal-on`, which that script adds to <html>
+ * before first paint — and only when it can see the job through. Without the
+ * class nothing here applies, so a browser with JavaScript off, or a visitor
+ * who asked for reduced motion, gets a page where all of this simply isn't
+ * happening rather than one stuck on `opacity: 0`.
+ *
+ * Movement is vertical only. A horizontal slide would have to flip direction
+ * for the Arabic pages, and a tile arriving from the wrong side is more
+ * distracting than no movement at all.
+ */
+.reveal-on [data-reveal],
+.reveal-on [data-reveal-items] > * {
+  opacity: 0;
+  transform: translateY(1.75rem);
+}
+
+.reveal-on [data-reveal].revealed,
+.reveal-on [data-reveal-items].revealed > * {
+  opacity: 1;
+  transform: none;
+  /*
+   * Long and heavily eased-out: the tile covers most of the distance early and
+   * settles slowly, which reads as weight. A linear 300ms reads as a web page
+   * doing a trick.
+   */
+  transition:
+    opacity 900ms cubic-bezier(0.16, 0.84, 0.24, 1),
+    transform 900ms cubic-bezier(0.16, 0.84, 0.24, 1);
+}
+
+/*
+ * Stagger, so a row of tiles arrives as a sequence rather than a block. Capped
+ * at nine — past that the last tile waits long enough to feel broken, and the
+ * grids here top out at nine anyway.
+ */
+.reveal-on [data-reveal-items].revealed > *:nth-child(2) { transition-delay: 70ms; }
+.reveal-on [data-reveal-items].revealed > *:nth-child(3) { transition-delay: 140ms; }
+.reveal-on [data-reveal-items].revealed > *:nth-child(4) { transition-delay: 210ms; }
+.reveal-on [data-reveal-items].revealed > *:nth-child(5) { transition-delay: 280ms; }
+.reveal-on [data-reveal-items].revealed > *:nth-child(6) { transition-delay: 350ms; }
+.reveal-on [data-reveal-items].revealed > *:nth-child(7) { transition-delay: 420ms; }
+.reveal-on [data-reveal-items].revealed > *:nth-child(8) { transition-delay: 490ms; }
+.reveal-on [data-reveal-items].revealed > *:nth-child(n + 9) { transition-delay: 560ms; }
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

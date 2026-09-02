@@ -121,9 +121,9 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/about">) 
 
       <Section className="border-t border-line bg-ink-raised">
         <h2 className="text-3xl">
-          {locale === "ar" ? "ثلاثة مسارات للعمل" : "Three ways we work"}
+          {locale === "ar" ? "مسارات العمل عندنا" : "How we work"}
         </h2>
-        <div className="mt-8 grid gap-6 lg:grid-cols-3">
+        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" data-reveal-items>
           {pillars.map((pillar) => (
             <Card key={pillar.id}>
               <h3 className="font-display text-xl font-extrabold uppercase tracking-wider text-gold">
@@ -146,7 +146,10 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/about">) 
         <h2 className="text-3xl">
           {locale === "ar" ? "جولة في المكان" : "A look around"}
         </h2>
-        <ul className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+        <ul
+          className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4"
+          data-reveal-items
+        >
           {studioGallery.map((shot) => (
             <li
               key={shot.src}

@@ -134,7 +134,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
           </p>
         </div>
 
-        <ul className="mt-12 grid gap-4 sm:grid-cols-3">
+        <ul className="mt-12 grid gap-4 sm:grid-cols-3" data-reveal-items>
           {brands.map((item) => (
             <li
               key={item.name}
@@ -157,7 +157,10 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
           title={t(ui.sections.pillarsTitle, locale)}
         />
 
-        <div className="mt-12 grid gap-6 lg:grid-cols-3">
+        <div
+          className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
+          data-reveal-items
+        >
           {pillars.map((pillar) => {
             const items = servicesInPillar(pillar.id);
             return (
@@ -205,7 +208,10 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
           </Link>
         </div>
 
-        <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <ul
+          className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+          data-reveal-items
+        >
           {featuredWork.slice(0, 6).map((slug) => {
             const service = getService(slug);
             if (!service) return null;
@@ -260,7 +266,10 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
           </Link>
         </div>
 
-        <ul className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-5">
+        <ul
+          className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-5"
+          data-reveal-items
+        >
           {reelClips.slice(0, 4).map((clip) => (
             <li key={clip.id}>
               <Clip
@@ -291,7 +300,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
           }
         />
 
-        <ul className="mt-10 grid gap-4 sm:grid-cols-3">
+        <ul className="mt-10 grid gap-4 sm:grid-cols-3" data-reveal-items>
           {studioStrip.map((shot) => (
             <li
               key={shot.src}

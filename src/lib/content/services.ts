@@ -1,6 +1,6 @@
 import { href, type Locale, type Translated } from "@/lib/i18n";
 
-export type PillarId = "protect" | "enhance" | "elevate";
+export type PillarId = "protect" | "enhance" | "elevate" | "maintain";
 
 export type Service = {
   slug: string;
@@ -20,10 +20,20 @@ export type Pillar = {
 };
 
 /**
- * The three pillars come straight off the client's own logo — the strapline
- * reads "Protect | Enhance | Elevate". Twenty-four services divide across them
- * with nothing left over, so the navigation matches the brand rather than
- * fighting it.
+ * The first three pillars come straight off the client's own logo, whose
+ * strapline reads "Protect | Enhance | Elevate" — so the navigation matches
+ * the brand rather than fighting it.
+ *
+ * **Maintain is the exception, and it is not on the logo.** It was added on
+ * 2 September to hold the servicing side of the business: tyres, alignment,
+ * battery, AC, oil, brakes, mechanical and auto-electrical work. None of that
+ * is paint work, so filing it under "shield the paint before the road gets to
+ * it" would have been nonsense; a fourth track is the honest place for it.
+ *
+ * Worth knowing that this widens what the site claims the business does. If
+ * the studio doesn't actually turn a spanner, this pillar should come out
+ * again rather than be quietly reworded — a visitor who books an oil change
+ * and arrives at a detailing bay is a worse outcome than a shorter list.
  */
 export const pillars: Pillar[] = [
   {
@@ -60,6 +70,18 @@ export const pillars: Pillar[] = [
     intro: {
       en: "Colour changes, body kits, roof racks, lighting, off-road kit. Reversible where it should be, permanent where you want it, and always fitted so nothing rattles, nothing leaks, and no factory warranty gets voided.",
       ar: "تغيير اللون، أطقم الهيكل، حمّالات السقف، الإضاءة، تجهيزات الطرق الوعرة. قابلة للإزالة حيث يجب، ودائمة حيث ترغب، ومركّبة دائمًا بحيث لا يصدر صوت ولا يحدث تسرب ولا يسقط ضمان الوكالة.",
+    },
+  },
+  {
+    id: "maintain",
+    name: { en: "Maintain", ar: "الصيانة" },
+    lede: {
+      en: "Keep it running as well as it looks",
+      ar: "لتبقى بحال يليق بمظهرها",
+    },
+    intro: {
+      en: "A car that looks immaculate and drives badly is only half looked after. This is the mechanical side of the unit — tyres, alignment, brakes, battery, air conditioning, oil and the electrics behind all of it. Same booking, same people, so a car in for film doesn't need a second trip across town for a service.",
+      ar: "سيارة تبدو مثالية وتسير بشكل سيئ هي سيارة اعتُني بنصفها فقط. هذا هو الجانب الميكانيكي في الورشة — الإطارات، والترصيص، والفرامل، والبطارية، والتكييف، والزيت، والكهرباء التي تقف خلف ذلك كله. الحجز نفسه والفريق نفسه، فلا تحتاج السيارة التي دخلت للفيلم إلى رحلة ثانية عبر المدينة من أجل الصيانة.",
     },
   },
 ];
@@ -311,6 +333,103 @@ export const services: Service[] = [
     short: {
       en: "Exhaust tips, intakes, lowering springs and wheel spacers, fitted and torqued by people who will tell you when a part is a bad idea.",
       ar: "فتحات عادم، ومداخل هواء، ونوابض تخفيض، وفواصل جنوط — تُركّب بعزم صحيح على يد من يخبرك بصراحة إذا كانت القطعة فكرة سيئة.",
+    },
+  },
+
+  /*
+   * The servicing side, added 2 September. Deliberately written without brand
+   * names or warranty claims: what stock they carry and what they guarantee is
+   * the client's to state, and neither is confirmed yet. Copy that describes
+   * the work is safe; copy that names a supplier is not.
+   */
+  {
+    slug: "new-tyres",
+    pillar: "maintain",
+    name: { en: "New Tyres", ar: "إطارات جديدة" },
+    short: {
+      en: "Supplied and fitted in your size, with the old ones disposed of. Dubai heat ages rubber faster than tread wears out, so the date code on the sidewall matters as much as the depth.",
+      ar: "نوفّر الإطارات بمقاسك ونركّبها ونتخلص من القديمة. حرارة دبي تُهرم المطاط أسرع مما يتآكل المداس، لذا تاريخ الصنع على جانب الإطار لا يقل أهمية عن عمق النقشة.",
+    },
+  },
+  {
+    slug: "wheel-alignment",
+    pillar: "maintain",
+    name: { en: "Alignment & Balancing", ar: "الترصيص وضبط الزوايا" },
+    short: {
+      en: "The fix for a wheel that pulls, a steering wheel sitting off-centre, or a set of tyres wearing on one shoulder. Measured on all four corners, not guessed at.",
+      ar: "الحل لسيارة تنحرف، أو مقود مائل عن المنتصف، أو إطارات تتآكل من جانب واحد. نقيس الزوايا الأربع بالجهاز، لا بالتخمين.",
+    },
+  },
+  {
+    slug: "new-rims",
+    pillar: "maintain",
+    name: { en: "New Rims & Alloy Wheels", ar: "جنوط وإطارات ألمنيوم جديدة" },
+    short: {
+      en: "A new set in the right offset and bolt pattern for your car, fitted and balanced. We'll say so if a size you like will foul the arches or wreck the ride.",
+      ar: "طقم جديد بالإزاحة ونمط البراغي الصحيحين لسيارتك، مع التركيب والترصيص. وسنخبرك بصراحة إذا كان المقاس الذي أعجبك سيحتك بالرفارف أو سيفسد نعومة القيادة.",
+    },
+  },
+  {
+    slug: "rim-repair",
+    pillar: "maintain",
+    name: { en: "Rim Repair", ar: "إصلاح الجنوط" },
+    short: {
+      en: "Kerb rash straightened, refinished and colour-matched, so one careless parking manoeuvre doesn't cost you a whole set of wheels.",
+      ar: "خدوش الأرصفة تُسوّى وتُعاد معالجتها بلون مطابق، فلا تكلفك وقفة خاطئة واحدة طقم جنوط كاملًا.",
+    },
+  },
+  {
+    slug: "battery-replacement",
+    pillar: "maintain",
+    name: { en: "New Battery", ar: "بطارية جديدة" },
+    short: {
+      en: "Tested before it's replaced — a car that won't start isn't always the battery. If it is, the new one is fitted and the electronics reset so nothing comes up on the dash.",
+      ar: "نفحص قبل أن نستبدل — السيارة التي لا تدور ليست دائمًا مشكلة بطارية. وإذا كانت كذلك، نركّب الجديدة ونعيد ضبط الأنظمة حتى لا تظهر أي إشارة على اللوحة.",
+    },
+  },
+  {
+    slug: "ac-service",
+    pillar: "maintain",
+    name: { en: "AC Service", ar: "صيانة التكييف" },
+    short: {
+      en: "In this city the air conditioning is not a comfort feature. Regassed, leak-tested and the cabin filter changed, so August doesn't catch you out.",
+      ar: "في هذه المدينة التكييف ليس رفاهية. نعيد تعبئة الغاز، ونفحص التسريبات، ونغيّر فلتر المقصورة، حتى لا يفاجئك شهر أغسطس.",
+    },
+  },
+  {
+    slug: "oil-service",
+    pillar: "maintain",
+    name: { en: "Oil Service", ar: "تغيير الزيت" },
+    short: {
+      en: "Oil and filter to your manufacturer's grade and interval. Heat and short city trips are hard on oil here, which is why the book interval is optimistic for Dubai.",
+      ar: "زيت وفلتر بالمواصفة والفترة التي حددتها الشركة المصنّعة. الحرارة والرحلات القصيرة داخل المدينة قاسية على الزيت هنا، ولهذا فإن الفترة المذكورة في الكتيّب متفائلة بالنسبة لدبي.",
+    },
+  },
+  {
+    slug: "brake-service",
+    pillar: "maintain",
+    name: { en: "Brake Service", ar: "صيانة الفرامل" },
+    short: {
+      en: "Pads, discs and fluid. Squealing usually means pads; a pedal that goes soft or a steering wheel that shudders under braking means something else, and we'll tell you which.",
+      ar: "أقمشة وأقراص وسائل الفرامل. الصرير غالبًا يعني الأقمشة؛ أما دواسة تغوص أو مقود يرتجف عند الكبح فيعني شيئًا آخر، وسنخبرك بأيهما.",
+    },
+  },
+  {
+    slug: "mechanical-repairs",
+    pillar: "maintain",
+    name: { en: "Mechanic", ar: "ميكانيكا عامة" },
+    short: {
+      en: "General mechanical work and diagnostics — the noise, the leak, the warning light. You get told what's actually wrong and what it costs before anything comes apart.",
+      ar: "أعمال ميكانيكية عامة وتشخيص — الصوت، والتسريب، ولمبة التحذير. نخبرك بالعطل الحقيقي وبالتكلفة قبل أن نفك أي شيء.",
+    },
+  },
+  {
+    slug: "auto-electrics",
+    pillar: "maintain",
+    name: { en: "Electric Service", ar: "كهرباء السيارات" },
+    short: {
+      en: "Auto-electrical faults traced properly: alternators and starters, lighting, sensors, wiring and the intermittent fault that never happens while anyone is watching.",
+      ar: "أعطال الكهرباء تُتعقّب كما ينبغي: الدينامو والسلف، والإضاءة، والحساسات، والأسلاك، والعطل المتقطع الذي لا يظهر أبدًا أمام أحد.",
     },
   },
 ];
