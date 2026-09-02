@@ -29,7 +29,10 @@ export function MobileNav({ locale }: { locale: Locale }) {
   }, [open]);
 
   return (
-    <div className="lg:hidden">
+    // Matches the desktop nav in header.tsx, which appears at `xl` — eight
+    // items no longer fit the row at `lg`. Keep the two in step or the site
+    // gets a stretch with no navigation at all.
+    <div className="xl:hidden">
       <button
         type="button"
         onClick={() => setOpen(true)}

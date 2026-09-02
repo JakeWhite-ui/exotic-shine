@@ -48,7 +48,13 @@ export function Logo({
   return (
     <Link
       href={href(locale, "/")}
-      className={`inline-block transition-opacity hover:opacity-85 ${className}`}
+      // `shrink-0` is load-bearing. The mark is sized by height with `w-auto`
+      // on the image, so a flex parent that runs out of room finds no
+      // intrinsic width to respect and squashes it to a sliver — the header
+      // logo rendered 16px wide against 80px tall the day a fourth nav item
+      // pushed the row over its container. Overflowing is the better failure
+      // of the two, because somebody notices it.
+      className={`inline-block shrink-0 transition-opacity hover:opacity-85 ${className}`}
       aria-label={`${business.legalName} — home`}
     >
       <Image

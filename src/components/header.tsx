@@ -66,8 +66,15 @@ export function Header({ locale }: { locale: Locale }) {
           className="h-16 sm:h-20"
         />
 
-        <nav aria-label="Main" className="hidden lg:block">
-          <ul className="flex items-center gap-6">
+        {/*
+          `xl`, not `lg`. Four pillars plus four page links is eight items, and
+          at 1024px they left the row needing about 90px more than the
+          container gives — which is what squashed the logo. The hamburger
+          already carries the full list, so it holds one breakpoint longer
+          rather than the row breaking.
+        */}
+        <nav aria-label="Main" className="hidden xl:block">
+          <ul className="flex items-center gap-4">
             {mainNav(locale).map((item) => (
               <li key={item.path}>
                 <Link
@@ -85,11 +92,17 @@ export function Header({ locale }: { locale: Locale }) {
           <ThemeToggle locale={locale} />
           <LangSwitch locale={locale} />
 
+          {/*
+            These two only exist for the window between `sm` and `lg`, where
+            the contact bar above is hidden. From `lg` up that bar spells out
+            the phone number and the email address in full, so keeping icons
+            for the same two things just cost the row 90px it didn't have.
+          */}
           <a
             href={`mailto:${business.email}`}
             aria-label={t(ui.cta.email, locale)}
             title={t(ui.cta.email, locale)}
-            className="tgl tgl-hover hidden sm:inline-flex"
+            className="tgl tgl-hover hidden sm:inline-flex lg:hidden"
           >
             <MailIcon className="size-4" />
           </a>
@@ -98,7 +111,7 @@ export function Header({ locale }: { locale: Locale }) {
             href={`tel:${business.phoneRaw}`}
             aria-label={t(ui.cta.call, locale)}
             title={t(ui.cta.call, locale)}
-            className="tgl tgl-hover hidden sm:inline-flex"
+            className="tgl tgl-hover hidden sm:inline-flex lg:hidden"
           >
             <PhoneIcon className="size-4" />
           </a>
