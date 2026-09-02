@@ -13,7 +13,21 @@
  * it, then animate it back. Doing it before first paint means the only state a
  * visitor ever sees is the intended one.
  *
- * Three things it deliberately handles:
+ * **This used to be an IntersectionObserver and isn't any more.** The observer
+ * reports the state of a target at the moment it gets a rendering opportunity,
+ * not every transition the target went through — so a tile scrolled past
+ * between two of those opportunities is only ever reported as "not
+ * intersecting", and stays at opacity 0 for good. Reading `boundingClientRect`
+ * to spot targets that had gone past helped, but only for tiles the observer
+ * reported on at all; three of the five grids on the live homepage were still
+ * blank after a fast scroll. A rAF-throttled sweep can't miss one, because it
+ * asks where things are now rather than waiting to be told.
+ *
+ * The cost is a scroll listener, which is what observers exist to avoid — but
+ * it measures at most a dozen elements, only on frames where the page actually
+ * scrolled, and it removes itself the moment the last tile has been revealed.
+ *
+ * Three other things it handles deliberately:
  *
  *   - **No JavaScript, or a thrown error.** The hiding class never gets added,
  *     so every tile renders normally. Content is never hidden by a rule that
@@ -22,45 +36,65 @@
  *     feature is inert rather than instant-but-still-there.
  *   - **Client-side navigation.** next/link swaps the DOM without a fresh
  *     document, so a MutationObserver picks up tiles that arrive later. Without
- *     it, everything below the first page load would stay invisible forever.
+ *     it, everything past the first page load would stay invisible.
  */
 export const revealScript = `
 (function(){
   var root = document.documentElement;
   try {
-    if (!('IntersectionObserver' in window) || !('MutationObserver' in window)) return;
+    if (!('MutationObserver' in window) || !('requestAnimationFrame' in window)) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     root.classList.add('reveal-on');
 
-    var io = new IntersectionObserver(function(entries){
-      for (var i = 0; i < entries.length; i++) {
-        var entry = entries[i];
-        // The second clause catches a tile that got past without ever being
-        // seen inside the viewport — a hard flick on a phone, or a jump to an
-        // anchor. The observer reports only the latest state, which for those
-        // is "above, and not intersecting"; without this they'd sit at
-        // opacity 0 and the visitor would find a blank grid on scrolling back.
-        if (!entry.isIntersecting && entry.boundingClientRect.top >= 0) continue;
-        entry.target.classList.add('revealed');
-        io.unobserve(entry.target);
+    var pending = [];
+    var queued = false;
+    var listening = false;
+
+    var sweep = function(){
+      queued = false;
+      // Trigger a little before the bottom edge, so a tile is properly on
+      // screen when it starts moving rather than a sliver of it. Anything with
+      // a negative top has been scrolled past and is revealed on the same
+      // test — no separate branch, and nothing can slip between two states.
+      var line = window.innerHeight * 0.9;
+      for (var i = pending.length - 1; i >= 0; i--) {
+        if (pending[i].getBoundingClientRect().top < line) {
+          pending[i].classList.add('revealed');
+          pending.splice(i, 1);
+        }
       }
-    }, {
-      // Held back from the very bottom edge so a tile starts moving once it's
-      // properly on screen, not while it's still a sliver.
-      rootMargin: '0px 0px -10% 0px',
-      threshold: 0.08
-    });
+      if (!pending.length && listening) {
+        window.removeEventListener('scroll', request);
+        window.removeEventListener('resize', request);
+        listening = false;
+      }
+    };
+
+    var request = function(){
+      if (queued) return;
+      queued = true;
+      window.requestAnimationFrame(sweep);
+    };
 
     var watch = function(scope){
       var found = scope.querySelectorAll('[data-reveal], [data-reveal-items]');
-      for (var i = 0; i < found.length; i++) io.observe(found[i]);
+      for (var i = 0; i < found.length; i++) {
+        if (found[i].className.indexOf('revealed') === -1) pending.push(found[i]);
+      }
+      if (!pending.length) return;
+      if (!listening) {
+        window.addEventListener('scroll', request, { passive: true });
+        window.addEventListener('resize', request);
+        listening = true;
+      }
+      request();
     };
 
     var start = function(){
-      // Its own try/catch because this can run a tick later, by which point
-      // the outer one is long gone — and an error escaping here would strand
-      // every tile on the page at opacity 0 with nothing left to undo it.
+      // Its own try/catch: this can run a tick later, by which point the outer
+      // one is long gone, and an error escaping here would strand every tile
+      // on the page at opacity 0 with nothing left to undo it.
       try {
         watch(document);
         new MutationObserver(function(records){
@@ -71,6 +105,10 @@ export const revealScript = `
             }
           }
         }).observe(document.body, { childList: true, subtree: true });
+
+        // Late images and fonts change where everything sits, so re-measure
+        // once the page has finished settling.
+        window.addEventListener('load', request);
       } catch (e) {
         root.classList.remove('reveal-on');
       }

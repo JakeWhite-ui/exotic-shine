@@ -183,11 +183,25 @@ paint; if the script can't finish, or the visitor asked for reduced motion, the
 class never lands and the CSS has no effect. Nothing is ever hidden by a rule
 that nothing is left alive to undo.
 
-Three edge cases it covers, each of which broke a page in testing before it
-was handled: client-side navigation (a MutationObserver picks up tiles that
-next/link brings in later), scrolling faster than the observer samples (a tile
-reported as "already above" is revealed rather than skipped), and an error on
-a later tick (its own catch, since the outer one is long gone by then).
+**It is not an IntersectionObserver, and that was learned the hard way.** An
+observer reports where a target was when it last got a rendering opportunity,
+not every state it passed through — so a tile scrolled past between two of
+those is only ever reported as "not intersecting" and stays at opacity 0
+permanently. Reading `boundingClientRect` to catch targets that had gone by
+helped, but only for tiles the observer reported on at all: three of the five
+grids on the live homepage were still blank after a fast scroll. It's a
+rAF-throttled sweep now, which asks where things are rather than waiting to be
+told, and so cannot miss one. The sweep measures a dozen elements on scrolling
+frames only, and unbinds itself once the last tile is revealed.
+
+Two other edge cases, both of which left a blank grid before they were
+handled: client-side navigation (a MutationObserver picks up tiles that
+next/link brings in later) and an error on a later tick (its own catch, since
+the outer one is long gone by then).
+
+If you change any of this, test it in a real browser. The preview pane runs
+the page as a hidden tab, where scroll and observer callbacks don't fire at
+all — it will look broken when it isn't, and vice versa.
 
 **Old service URLs are redirected, not dropped.** GitHub Pages can't do 301s,
 so `scripts/flatten-export.mjs` writes meta-refresh stubs for the retired
